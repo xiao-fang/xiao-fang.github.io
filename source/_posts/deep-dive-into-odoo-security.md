@@ -1,6 +1,9 @@
 ---
 title: Deep Dive Into Odoo Security
-tags: odoo; others
+tags:
+    - odoo
+    - python
+    - others
 ---
 
 #### Deep Dive Into Odoo Security
@@ -92,7 +95,7 @@ class res_users(osv.osv):
 配置ACL, `*.csv`
 ![Access Control](/assets/oddo-security-01.png)
 
-![ACL Config](/assets/oddo-security-02.png)
+![ACL Config](/assets/odoo-security-02.png)
 
 [Practice]
 - 给Sales添加Lead的Read / Write权限, 看读写, 和Menu变化.
