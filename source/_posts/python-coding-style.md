@@ -1,11 +1,14 @@
 ---
-title: Hello World
+title: Python Coding Style
 tags:
     - python
     - others
 ---
 
 #### 1.  Python 代码规范
+
+	# Deep Dive Into Odoo Security
+	© Edward | xiao.fang@outlook.com
 
 ##### 分号( ; )
 
