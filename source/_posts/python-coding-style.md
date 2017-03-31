@@ -1,5 +1,8 @@
 ---
 title: Hello World
+tags:
+    - python
+    - others
 ---
 
 #### 1.  Python 代码规范
