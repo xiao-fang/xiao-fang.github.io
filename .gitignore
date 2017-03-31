@@ -5,3 +5,10 @@ db.json
 node_modules/
 public/
 .deploy*/
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/xiao-fang.github.io.hexo.iml
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
