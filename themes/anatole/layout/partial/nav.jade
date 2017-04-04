@@ -16,6 +16,11 @@
       else
         a(href="/archives")= __('Archive')
     li
+      if is_tag("leisure") || is_category('leisure')
+        a.current(href="/categories/leisure")= __('Leisure')
+      else
+        a(href="/categories/leisure")= __('Leisure')
+    li
       if is_current('links')
         a.current(href="/links")= __('Links')					
       else

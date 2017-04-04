@@ -60,10 +60,10 @@ mixin postList()
 					| </ul><div class="listing-title">
 					!= year
 					| </div><ul class="listing">
-			
+
 			.listing-item
 				.listing-post
 					a(href= url_for(item.path), title= item.title)= item.title
 					div.post-time
-						span.date= date(item.date, 'MM-DD')
+						span.date= date(item.date, 'YYYY-MM-DD')
 		- })
