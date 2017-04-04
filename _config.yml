@@ -75,5 +75,5 @@ archive_generator:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/xiao-fang/xiao-fang.github.io.git
+  repo: git@github.com:xiao-fang/xiao-fang.github.io.git
   branch: master
