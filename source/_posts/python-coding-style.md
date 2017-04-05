@@ -41,6 +41,9 @@ tags:
 # https://www.python.org/dev/peps/pep-0008/#\
 # public-and-internal-interfaces
 ```
+
+<!-- more -->
+
 ##### 括号
 > - 原则: 宁缺勿滥
 

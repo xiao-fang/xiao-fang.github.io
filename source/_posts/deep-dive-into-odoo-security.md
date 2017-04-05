@@ -38,6 +38,8 @@ class res_users(osv.osv):
     _name = "res.users"
 ```
 
+<!-- more -->
+
 ##### Demo Groups ( `res_groups` )
 
 > - `demo.group_ciic_customer`
