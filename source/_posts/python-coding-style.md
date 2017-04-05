@@ -5,6 +5,8 @@ tags:
     - others
 ---
 
+<!-- toc -->
+
 #### 1.  Python 代码规范
 
 	# Deep Dive Into Odoo Security
@@ -408,7 +410,7 @@ if __name__ == '__main__':
 #### 3. Python for odoo 项目规范
 
 
-#### 0. 参考
+#### 4. 参考
 
 > - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
 > - [Google Python编码规范 (中译)](http://wiki.jikexueyuan.com/project/google-python-style-guide/python-style-rules.html])

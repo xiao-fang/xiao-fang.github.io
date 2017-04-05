@@ -65,6 +65,9 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: anatole
 
+toc:
+  maxDepth: 5
+
 archive_generator:
   per_page: 0
   yearly: false
