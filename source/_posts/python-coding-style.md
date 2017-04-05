@@ -5,8 +5,6 @@ tags:
     - others
 ---
 
-<!-- toc -->
-
 #### 1.  Python 代码规范
 
 	# Deep Dive Into Odoo Security

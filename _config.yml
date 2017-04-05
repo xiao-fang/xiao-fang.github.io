@@ -4,15 +4,15 @@
 
 # Site
 title: xiao-fang.me
-subtitle: Hello Edward
-description: Across the Great Wall, we can reach every corner in the world
-author: xiao.fang@outlook.com
-language:
+subtitle: 一粟生
+description: trust your heart<br/>if the seas catch fire<br/>and live by love<br/>though the stars walk backward
+author: "@xiao-fang"
+language: en
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://xiao-fang.me
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: anatole
+theme: next
 
 toc:
   maxDepth: 5

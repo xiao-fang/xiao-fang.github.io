@@ -11,8 +11,6 @@ tags:
 	# Deep Dive Into Odoo Security
 	© Edward | xiao.fang@outlook.com
 
-<!-- toc -->
-
 ***
 #### 演示数据准备
 
