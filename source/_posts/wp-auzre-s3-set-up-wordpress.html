@@ -1,0 +1,123 @@
+---
+title: WordPress on Azure - S1 - Create a new Ubuntu VM on Azure
+date: 4/24/2016 13:00
+tags:
+- WordPress
+- Azure
+- Ubuntu
+- VM
+- PuTTY
+---
+
+<html>
+<head>
+    <style>
+        body, td {
+            font-family: Tahoma;
+            font-size: 10pt;
+        }
+    </style>
+</head>
+<body>
+
+<p style="position: absolute;color: #FFF;text-decoration: none;font-size: 12px;height: 25px;border-radius: 0;margin-top: -20px;right: 15px;background: rgba(0, 0, 0, 0);border-left: 10px solid #BB3A34;border-right: 10px solid #BB3A34;border-bottom: 5px solid rgba(0, 0, 0, 0);width: 0;text-indent:-100000px;"/>
+<p style="margin: 0 0 1.1em; line-height: 1.6;"></p>
+<p style="margin: 0 0 1.1em; color: rgba(44,63,81,0.3); line-height: 1.6;"><code
+        style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; border-radius: 0; color: #fff; background: rgba(44,63,81,0.3); margin-right: 6px;">WordPresss</code>
+    <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; color: rgba(44,63,81,0.5); border-radius: 0; background: rgba(102,128,153,0.075);">Azure</code>
+    <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; color: rgba(44,63,81,0.5); border-radius: 0; background: rgba(102,128,153,0.075);">WordPress</code>
+    <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; color: rgba(44,63,81,0.5); border-radius: 0; background: rgba(102,128,153,0.075);">Ubuntu</code>
+    <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; color: rgba(44,63,81,0.5); border-radius: 0; background: rgba(102,128,153,0.075);">PuTTY</code>
+    <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; background-color: #f9f2f4; white-space: normal; padding: 2px 5px; color: rgba(44,63,81,0.5); border-radius: 0; background: rgba(102,128,153,0.075);">posts</code>
+</p>
+<p
+        style="margin: 0 0 1.1em; line-height: 1.6;"></p>
+
+<p style="margin: 0 0 1.1em; line-height: 1.6;"><strong style="font-weight: bold; line-height: 1.6;">1. Create MySQL database via PhpMyAdmin</strong> <br/>
+    Goto PhpMyAdmin site (<code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; padding: 2px 4px; color: #c7254e; background-color: #f9f2f4; white-space: normal; border-radius: 4px;">http://vm-host/phpmyadmin/</code>),
+    login with <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; padding: 2px 4px; color: #c7254e; background-color: #f9f2f4; white-space: normal; border-radius: 4px;">root</code> user
+    and password.</p>
+
+</div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-phpmyadmin.png" type="image/png" alt="Alt text|300*0" longdesc="./3-phpmyadmin.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="300"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">Create a new database, give an unique database name, choose <code
+            style="font-family: 'Source Code Pro',monospace; font-size: .9em; padding: 2px 4px; color: #c7254e; background-color: #f9f2f4; white-space: normal; border-radius: 4px;">utf8-general-ci</code>,
+        then <code
+                style="font-family: 'Source Code Pro',monospace; font-size: .9em; padding: 2px 4px; color: #c7254e; background-color: #f9f2f4; white-space: normal; border-radius: 4px;">Create</code>.
+    </p></div>
+<div
+        style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-2-create-db.png" type="image/png" alt="Alt text|600*0" longdesc="./3-2-create-db.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <!-- more -->
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><strong style="font-weight: bold; line-height: 1.6;">2. Set Up WordPress</strong> <br/>
+        Goto WordPress site <code
+                style="font-family: 'Source Code Pro',monospace; font-size: .9em; padding: 2px 4px; color: #c7254e; background-color: #f9f2f4; white-space: normal; border-radius: 4px;">http://vm-host/wp-admin/setup-config.php</code>
+        for a first-time installation.</p>
+
+</div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-3-wordpress-setup.png" type="image/png" alt="Alt text|300*0" longdesc="./3-3-wordpress-setup.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="300"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">Configure database connection details for WordPress, with MySQL database just created.</p></div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-4-conf.png" type="image/png" alt="Alt text|600*0" longdesc="./3-4-conf.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">Database connected, then go ahead to run the install.</p></div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-5-ready.png" type="image/png" alt="Alt text|600*0" longdesc="./3-5-ready.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">Quick configuration for WordPress site.</p></div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-6-install.png" type="image/png" alt="Alt text|600*0" longdesc="./3-6-install.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">Success, enjoy!</p></div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-7-success.png" type="image/png" alt="Alt text|600*0" longdesc="./3-7-success.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;">^_^</p></div>
+<div style="line-height: 1.6;">
+
+    <p style="margin: 0 0 1.1em; line-height: 1.6;"><img src="/uploads/wp-azure-s3-8-wordpress.png" type="image/png" alt="Alt text|600*0" longdesc="./3-8-wordpress.png"
+                                                         style="border: 0; vertical-align: middle; max-width: 100%;" title="" width="600"/></p>
+
+    <blockquote
+            style="padding: 15px 20px; margin: 0 0 1.1em; border-left: 5px solid rgba(102,128,153,0.075); border-left-width: 10px; background-color: rgba(102,128,153,0.05); border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+        <p style="margin: 0 0 1.1em; font-size: 1em; font-weight: 300; margin-bottom: 0; line-height: 1.6;">Done.</p>
+    </blockquote>
+
+</div>
+<div style="line-height: 1.6;"></div>
+<div style="line-height: 1.6;"></div>
+</div>
+<center style="display:none">
+    %23%20S3%20-%20Set%20Up%20WordPress%0A@%28WordPresss%29%5BAzure%2C%20WordPress%2C%20Ubuntu%2C%20PuTTY%2C%20posts%5D%0A%0A%20**1.%20Create%20MySQL%20database%20via%20PhpMyAdmin**%20%0AGoto%20PhpMyAdmin%20site%20%28%60http%3A//vm-host/phpmyadmin/%60%29%2C%20login%20with%20%60root%60%20user%20and%20password.%0A%21%5BAlt%20text%7C300*0%5D%28./3-phpmyadmin.png%29%0A%0ACreate%20a%20new%20database%2C%20give%20an%20unique%20database%20name%2C%20choose%20%60utf8-general-ci%60%2C%20then%20%60Create%60.%0A%21%5BAlt%20text%7C600*0%5D%28./3-2-create-db.png%29%0A%0A%20**2.%20Set%20Up%20WordPress**%20%0AGoto%20WordPress%20site%20%60http%3A//vm-host/wp-admin/setup-config.php%60%20for%20a%20first-time%20installation.%0A%21%5BAlt%20text%7C300*0%5D%28./3-3-wordpress-setup.png%29%0A%0AConfigure%20database%20connection%20details%20for%20WordPress%2C%20with%20MySQL%20database%20just%20created.%0A%21%5BAlt%20text%7C600*0%5D%28./3-4-conf.png%29%0A%0ADatabase%20connected%2C%20then%20go%20ahead%20to%20run%20the%20install.%0A%21%5BAlt%20text%7C600*0%5D%28./3-5-ready.png%29%0A%0AQuick%20configuration%20for%20WordPress%20site.%0A%21%5BAlt%20text%7C600*0%5D%28./3-6-install.png%29%0A%0ASuccess%2C%20enjoy%21%0A%21%5BAlt%20text%7C600*0%5D%28./3-7-success.png%29%0A%0A%5E_%5E%0A%21%5BAlt%20text%7C600*0%5D%28./3-8-wordpress.png%29%0A%0A%3E%20Done.%0A
+</center>
+<br/></span>
+</div>
+</body>
+</html> 
