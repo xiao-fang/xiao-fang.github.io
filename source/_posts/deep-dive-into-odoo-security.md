@@ -93,9 +93,9 @@ class res_users(osv.osv):
 > * `ACL`之间可以累加, 取并集. (`additive`).
 
 配置ACL, `*.csv`
-![Access Control](/assets/oddo-security-01.png)
+![Access Control](/uploads/oddo-security-01.png)
 
-![ACL Config](/assets/odoo-security-02.png)
+![ACL Config](/uploads/odoo-security-02.png)
 
 [Practice]
 - 给Sales添加Lead的Read / Write权限, 看读写, 和Menu变化.
