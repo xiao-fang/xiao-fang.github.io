@@ -17,8 +17,9 @@ script:
 
 after_success:
   - hexo d
-  - rm -rf ../.deploy_git
-  - rm -rf ..
+  - cd ..
+  - rm -rf ./.deploy_git
+  - rm -rf ./public
 
 branches:
   only:
