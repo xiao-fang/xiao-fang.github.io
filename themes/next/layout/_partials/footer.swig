@@ -20,3 +20,9 @@
   </a>
 </div>
 {% endif %}
+
+<div>
+  {% set updatedTime = date(Date.now(), "YYYY/MM/DD HH:mm:ss") %}
+  <small>updated on {{updatedTime}}</small>
+</div>
+
