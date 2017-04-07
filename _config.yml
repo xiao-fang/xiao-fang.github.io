@@ -78,5 +78,5 @@ archive_generator:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://877e2ad2597037010633391149da2147b16a9e32@github.com/owner/repo.git
+  repo: https://483635131e5802cb3d300d77ce9b6172cfd7e19e@github.com/owner/repo.git
   branch: master
