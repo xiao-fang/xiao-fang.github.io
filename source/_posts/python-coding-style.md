@@ -1,5 +1,6 @@
 ---
 title: Python Coding Style
+date: 03/31/2017
 tags:
     - python
     - others

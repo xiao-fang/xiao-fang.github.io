@@ -1,5 +1,6 @@
 ---
 title: Deep Dive Into Odoo Security
+date: 03/31/2017
 tags:
     - odoo
     - python
