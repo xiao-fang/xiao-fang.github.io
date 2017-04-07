@@ -29,7 +29,13 @@ script:
   - hexo generate
 
 after_success:
-  - hexo d
+  - cd ./public
+  - git init
+  - git add --all .
+  - git commit -m "auto build & published via Travis CI on `date`"
+  - git push --quiet --force https://$DEPLOY_REPO_TOKEN@github.com:xiao-fang/xiao-fang.github.io.git master
+  - rm -rf ../.deploy_git
+  - rm -rf ..
 
 branches:
   only:
