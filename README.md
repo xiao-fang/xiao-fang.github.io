@@ -1,5 +1,5 @@
 ## xiao-fang.github.io.hexo
-[![Travis CI Build Status](https://travis-ci.org/xiao-fang/xiao-fang.github.io.hexo.svg?branch=master)](https://travis-ci.org/xiao-fang/xiao-fang.github.io.hexo)
+[![Travis Status](https://travis-ci.org/xiao-fang/xiao-fang.github.io.svg?branch=master)](https://travis-ci.org/xiao-fang/xiao-fang.github.io)
 >
 | Preview | => |https://xiao-fang.me/ |
 | :- |:-:| :- |
