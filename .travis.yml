@@ -19,7 +19,6 @@ after_success:
   - hexo d
   - rm -rf ../.deploy_git
   - rm -rf ..
-  - ll
 
 branches:
   only:
