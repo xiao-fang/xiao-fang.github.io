@@ -16,14 +16,19 @@ script:
   - hexo generate
 
 after_success:
-  - hexo d
+  #- hexo d
+  - cd ./public
+  - git init
+  - git add --all .
+  - git commit -m "auto build & deployed via Travis on `date`"
+  - git push --quiet --force https://$GH_DEPLOY_TOKEN@github.com/xiao-fang/xiao-fang.github.io.git master
   - cd ..
   - rm -rf ./.deploy_git
   - rm -rf ./public
 
 branches:
   only:
-    - master
+    - hexo
 cache:
   directories:
     - node_modules
