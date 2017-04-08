@@ -137,7 +137,9 @@ font:
 # Value is the target link (E.g. GitHub: https://github.com/iissnan)
 social:
   GitHub: https://github.com/xiao-fang
+  LinkedIn: https://www.linkedin.com/in/edwardxiao/
   Weibo: http://weibo.com/vanceeshaw
+  Twitter: https://twitter.com/HolaRealEdward
 
 # Social Links Icons
 # Icon Mapping:
@@ -149,6 +151,7 @@ social_icons:
   # Icon Mappings.
   # KeyMapsToSocialItemKey: NameOfTheIconFromFontAwesome
   GitHub: github
+  LinkedIn: linkedin-square
   Twitter: twitter
   Weibo: weibo
 
