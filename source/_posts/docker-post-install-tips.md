@@ -25,7 +25,7 @@ When use docker commands as a non-root (or sudo) role, `permission denined` as f
 ```log
 # use docker command as non-root(or equal) role
 $ docker images
-Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.27/images/json: dial unix /var/run/docker.sock: connect: permission denied
+# Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.27/images/json: dial unix /var/run/docker.sock: connect: permission denied
 ```
 
 > **Warning**: The `docker` group grants privileges equivalent to the `root` user.
