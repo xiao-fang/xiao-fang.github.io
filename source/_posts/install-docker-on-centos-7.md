@@ -1,11 +1,14 @@
 ---
 title: Install Docker On CentOS 7
 date: 04/25/2017
-category: Notes
+categories:
+- Notes
+- DevOps
 tags:
-    - CentOS
-    - Docker
-    - Docker CE
+- CentOS
+- Docker
+- Docker CE
+- DevOps
 ---
 
 Here are the quick steps to get started with Docker on CentOS, now install `Docker CE` on `CentOS` 7.
