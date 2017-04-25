@@ -43,6 +43,8 @@ $ sudo usermod -aG docker YOUR_USER_NAME
 
 * Verify that you can run **any** `docker` commands without `sudo`.
 
+<!-- more -->
+
 ### Configure Docker to start on boot
 > Most current Linux distributions (RHEL, CentOS, Fedora, Ubuntu 16.04 and higher) use `systemd` to manage which services start when the system boots. Ubuntu 14.10 and below use upstart.
 
