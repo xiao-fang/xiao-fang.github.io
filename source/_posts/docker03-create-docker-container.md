@@ -195,6 +195,16 @@ Let's go back, when the app started, shows `Running on http://0.0.0.0:80/ (Press
 - To reattach to a detached container, use docker attach command.
 - Refer to [Detached (-d)](https://docs.docker.com/engine/reference/run/#detached--d)
 
+
+#### Stop / Start a Docker `Container`
+
+- Docker `run` can always creates a new container.
+- Docker `start` or `stop` can stop / start an existing container without creating a new.
+- References:
+    - [docker `stop`](https://docs.docker.com/engine/reference/commandline/stop/)
+    - [docker `start`](https://docs.docker.com/engine/reference/commandline/start/)
+    - [docker `run`](https://docs.docker.com/engine/reference/commandline/run/)
+
 ### Q&A
 
 > Q: Can the same app run with multiple containers, how to assign the port?
