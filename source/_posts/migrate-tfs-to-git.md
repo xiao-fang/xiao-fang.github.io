@@ -25,13 +25,13 @@ git-tf clone "http://<TFS Server Name>:Port/tfs/<CollectionName> "$/TeamProjectN
 ```
 
 Some errors may happen here:
-##### TFS server certificate validation error
+#### TFS server certificate validation error
 ```bash
 git-tf: sun.security.validator.ValidatorException: PKIX path building failed: su
 n.security.provider.certpath.SunCertPathBuilderException: unable to find valid c
 ertification path to requested target
 ```
-> how to fix
+> how to fix:
 
 export TFS server certificate as `Base-64 encoded X.509 (.CER)` file, then add it to local JRE trust keystore, because `Git-TF` depends on it.
 Maybe there's many version of JRE on your machine, use `java -version` to check current runtime.
@@ -51,7 +51,7 @@ Enter keystore password: changeit
 
 <!-- more -->
 
-##### Unable to access remote Git due to SSL certificate
+#### Unable to access remote Git due to SSL certificate
 
 ```
 fatal: unable to access 'https://evrt-tfspro.houston.entsvcs.net/tfs/TFS03/ES_AS
@@ -63,7 +63,8 @@ problem: unable to get local issuer certificate
 git config --global http.sslVerify false
 ```
 
-**Ok, the `tfs_project` code are checkout as git repo successfully now ~**
+** Ok, the `tfs_project` code are checkout as git repo successfully now ~ **
+
 
 ### Commit as Git Changes
 
@@ -94,10 +95,10 @@ git push origin master -f
 
 **Ok, the `git_project` is pushed to TFS git successfully now ~**
 
-![](/uploads/tfs-git.jpg)
+![](/uploads/tfs-git.jpeg)
 
 
-### Git Ignore for .NET project
+### `.gitignore` for .NET project
 Generally, the source `tfs_project` may target on .NET platform, maybe Visual Studio project, there is useful `.gitignore` shared by [Official GitHub](https://github.com/github) on [visualstudio.ignore](https://github.com/github/gitignore/blob/master/VisualStudio.gitignore) for your reference.
 
 ### Reference
