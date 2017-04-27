@@ -49,6 +49,8 @@ Enter keystore password: changeit
 ```
 `Notice that default JRE keystore password is ` **changeit**.
 
+<!-- more -->
+
 ##### Unable to access remote Git due to SSL certificate
 
 ```
