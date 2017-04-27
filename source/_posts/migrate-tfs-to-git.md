@@ -54,9 +54,8 @@ Enter keystore password: changeit
 #### Unable to access remote Git due to SSL certificate
 
 ```
-fatal: unable to access 'https://evrt-tfspro.houston.entsvcs.net/tfs/TFS03/ES_AS
-IAPACIFIC_CN_APPS_GD_Devopsportal/_git/ES_GD_CN_DevOpsPortal/': SSL certificate
-problem: unable to get local issuer certificate
+fatal: unable to access 'http://<TFS Server Name>:Port/tfs/<CollectionName>/<Team>/_git/<TeamProjectName>/':
+SSL certificate problem: unable to get local issuer certificate
 ```
 > how to fix:
 ```
