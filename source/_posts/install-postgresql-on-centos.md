@@ -88,7 +88,7 @@ $ systemctl restart postgresql
 ```
 
 Now take a loot at external connection to `PostgreSQL` via `Navicat` (or any other tools).
-![](/uploads/ee-commings.jpg)
+![](/uploads/postgres-navicat.jpg)
 
 ### Q&A
 **Q1. what's the default password for PostgreSQL?**
