@@ -1,5 +1,5 @@
 ---
-title: Install Docker On CentOS 7
+title: How to Install PostgreSQL on CentOS 7?
 date: 05/11/2017 17:00
 categories:
 - Notes
