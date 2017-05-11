@@ -36,7 +36,7 @@ Find the lines that looks like this, near the bottom of the file:
 host    all             all             127.0.0.1/32            ident
 host    all             all             ::1/128                 ident
 ```
-then replace `ident` with `md5`, also add one more record `host	all	all	0.0.0.0/0	md5`, so that the configurations like this:
+then replace `ident` with `md5`, also add one more record `host     all     all     0.0.0.0/0       md5`, so that the configurations like this:
 ```bash
 #   pg_hba.conf excerpt (updated)
 host    all             all             127.0.0.1/32            md5
