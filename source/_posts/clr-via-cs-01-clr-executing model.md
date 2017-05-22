@@ -13,6 +13,7 @@ tags:
 
 > DRAFT VERSION
 
+![](/uploads/clr-via-cs-01-clr-execution-model.jpg)
 
-![](/uploads/clr-via-cs-01-clr-execution-model.svg)
+Download HD PDF version via [uploads/clr-via-cs-01-clr-execution-model](/uploads/clr-via-cs-01-clr-execution-model.pdf)
 
