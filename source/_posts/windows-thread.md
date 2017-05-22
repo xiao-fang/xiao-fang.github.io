@@ -12,7 +12,8 @@ tags:
 > DRAFT VERSION
 
 # Thread Basic
--   backgroup
+
+### background
     OS only one `Thread` of execution that ran through the entire system.
     - includes both OS code/data and application code/data
     - exclusive, prevent other tasks from executing
@@ -51,15 +52,16 @@ tags:
     - Higher-priority threads always `preempt`(抢占) lower-priority threads, regardless of what the lower-priority threads are executing.
     - A `zero page thread` creates on system boot, the lowest priority, when there's no any other high priority threads need to work, so it's turn to work, `to zeroing any free pages of RAM in system`. ( `priority 0 is reserved ofor the zero page thread`)
     -  Process Priority and Relative Thread Priority Mapping
-        | Thread / Process | Real time | High | Above Normal | Normal | Below Normal | Idle |
-        |------------------|-----------|------|-------------|--------|-------------|------|
-        | Time critical | 31 | 15 | 15 | 15 | 15 | 15 |
-        | Highest | 26 | 15 | 12 | 10 | 8 | 6 |
-        | Above normal | 25 | 14 | 11 | 9 | 7 | 5 |
-        | Normal | 24 | 13 | 10 | 8 | 6 | 4 |
-        | Below normal | 23 | 12 | 9 | 7 | 5 | 3 |
-        | Lowest | 22 | 11 | 8 | 6 | 4 | 2 |
-        | Idle | 16 | 1 | 1 | 1 | 1 | 1 |
+
+       | Thread / Process | Real time | High | AboveNormal | Normal | BelowNormal | Idle |
+       |------------------|-----------|------|-------------|--------|-------------|------|
+       | Time critical    | 31        | 15   | 15          | 15     | 15          | 15   |
+       | Highest          | 26        | 15   | 12          | 10     | 8           | 6    |
+       | Above normal     | 25        | 14   | 11          | 9      | 7           | 5    |
+       | Normal           | 24        | 13   | 10          | 8      | 6           | 4    |
+       | Below normal     | 23        | 12   | 9           | 7      | 5           | 3    |
+       | Lowest           | 22        | 11   | 8           | 6      | 4           | 2    |
+       | Idle             | 16        | 1    | 1           | 1      | 1           | 1    |
 
 -   Foregroud Threads vs. Backgroud Threads
     -  CLR consider every thread to be either a foregroud or a backgroud thread.
