@@ -68,6 +68,7 @@ OS only one `Thread` of execution that ran through the entire system.
 -  When all foreground threads in a process stop running, then CLR force stops any backgroud threads regardless if background threads are still running.
 
 # Compute-Bound Async Operations
+
 ### Thread Pool
 - why threads should be improved?
     -   creating/destroying a thread is an expensive operation in terms of time
@@ -84,6 +85,9 @@ OS only one `Thread` of execution that ran through the entire system.
     static Boolean QueueUserWorkItem(WaitCallback callBack);
     static Boolean QueueUserWorkItem(WaitCallback callBack, Object state);
     ```
+- Limitations
+    - `Thread Pool`, that there's no build-in way for operation completed callback.
+
 ### Execution Contexts
 - every thread has an `execution context` associated to it.
 - `execution context` includes such as,
@@ -101,10 +105,12 @@ OS only one `Thread` of execution that ran through the entire system.
         // Less commonly used methods are not shown
     }
     ```
+
 ### Cooperative Cancellation and Timeout
--  .NET fromework offers a standard pattern for canceling operations, is `cooperative`
--  `System.Threading.CancellationTokenSource`.
-    -   the `Token` is __readonly__, auto-generated on CancellationTokenSource creation.
+
+- .NET fromework offers a standard pattern for canceling operations, is `cooperative`
+- `System.Threading.CancellationTokenSource`.
+    - the `Token` is __readonly__, auto-generated on CancellationTokenSource creation.
 
     ```csharp
     public sealed class CancellationTokenSource : IDisposable
@@ -118,15 +124,15 @@ OS only one `Thread` of execution that ran through the entire system.
     }
     ```
 
--  `CancellationToken` instance is a lightweight value type.
-    -   any cancel actions can be `Register` within token, that can use `Dispose` to release registered callback from token source.
+- `CancellationToken` instance is a lightweight value type.
+    - any cancel actions can be `Register` within token, that can use `Dispose` to release registered callback from token source.
 
     ```csharp
     public struct CancellationToken
     {
         public static CancellationToken None { get; } // Very convenient
-        public Boolean IsCancellationRequested { get; } // Called by non­Task invoked operations
-        public void ThrowIfCancellationRequested(); // Called by Task­invoked operations
+        public Boolean IsCancellationRequested { get; } // Called by non-task invoked operations
+        public void ThrowIfCancellationRequested(); // Called by Task-invoked operations
         public WaitHandle WaitHandle { get; } // WaitHandle is signaled when the CancellationTokenSource is canceled
         public CancellationTokenRegistration Register(/** multiple overloads */);
         // other members
@@ -135,12 +141,21 @@ OS only one `Thread` of execution that ran through the entire system.
 - `CancellationToken’s Register` to register callbacks from token source that would be invoked when calling `Cancel`.
 
 ### Tasks
-xx
--
-# References
 
-- CLR Via C#, 4th Edition, by `Jeffrey Richter`
-- [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
+- Task *vs* ThreadPool
+
+    ```csharp
+    ThreadPool.QueueUserWorkItem(ComputeBoundOp, 5); // Calling QueueUserWorkItem
+    new Task(ComputeBoundOp, 5).Start(); // Equivalent of preceding using Task
+    Task.Run(() => ComputeBoundOp(5)); // Another equivalent
+    ```
+
+- Wait for Task Completed/Result
+
+
+# References
+    - CLR Via C#, 4th Edition, by `Jeffrey Richter`
+    - [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
 
 # About Me
 
