@@ -151,7 +151,78 @@ OS only one `Thread` of execution that ran through the entire system.
     ```
 
 - Wait for Task Completed/Result
+    - If the compute-bound task throws an `unhandled exception`, the exception will be `swallowed`, stored in a collection, and the thread pool thread is allowed to return to the thread pool. When the `Wait` method or the `Result` property is invoked, these members will throw a `System.AggregateException` object.
+    - If you `never` call Wait or Result or query a Task’s Exception property, then your code never observes that this exception has occurred. This is not ideal, because your program has experienced an unexpected problem that you are not aware of. To help you detect unobserved exceptions, you can register a callback method with `TaskScheduler’s static UnobservedTaskException` event.
 
+- Cancel a Task
+    - you can use a `CancellationTokenSource` to cancel a __Task__ by creating a task associated a `CancellationToken` within _Task_'s constructor.
+        ```csharp
+        // one of a cancellable constructors
+        public Task(Action action, CancellationToken cancellationToken)
+        ```
+    -  Task states, as following.
+        ```csharp
+        namespace System.Threading.Tasks
+        {
+            public enum TaskStatus
+            {
+                Created = 0,    // Task created explicitly; you can manually Start() this task
+                WaitingForActivation = 1,   // Task created implicitly; it starts automatically
+                WaitingToRun = 2,   // The task was scheduled but isn’t running yet
+                Running = 3,    // The task is actually running
+                WaitingForChildrenToComplete = 4,   // The task is waiting for children to complete before it considers itself complete
+
+                // A task's final state is one of these:
+                RanToCompletion = 5,
+                Canceled = 6,
+                Faulted = 7
+            }
+        }
+        ```
+    > Only task in Non-Run status (`Created/WaitingForActivation/WaitingToRun`) can be successfully canceled, otherwise, if the task is started/running (`Running`), cancel task would throw `System.AggregateException` exception when calling Wait/Result of Task, and if the task is completed (`RanToCompletion`/`Canceled`/`Faulted`), cancel will take no effects and also throw no exceptions.
+
+- ContinueWith another Task
+    - `task` can be continued with another task, or tasks one by one, in `continuationAction` can access the pass-in `task`, continuationAction can also `cancelable` via `CancellationToken`, and executes `conditionally` by `TaskContinuationOptions`.
+        ```csharp
+        // sample overload of ContinueWith
+        public Task ContinueWith(Action<Task> continuationAction, CancellationToken cancellationToken, TaskContinuationOptions continuationOptions, TaskScheduler scheduler);
+        ```
+
+- Inside a Task
+    - `todo`
+
+- Task Factory
+    - `todo`
+
+- Task Scheduler
+    - `todo`
+
+- **Task.Delay vs Thread.Sleep**
+    `Task.Delay` will created a Task with status `WaitingForActivation`, will automatic starts (actually take no actions) to `complete`, usually `ContinueWith` another task to execute after delay.
+    -   As it's a new task, an async task, it would not block current thread. But if Wait() the task, it also block current thread, if use `async/await` pattern it would non-block current thread and wait for completion.
+    -   As it's `WaitingForActivation`, it can't be Start again, it will start automatically.
+
+    `Thread.Sleep` would directly sleep/block current thread for a period of time.
+
+    ```csharp
+            //  create a non-operation async task to complete after 10s delay. status ='WaitingForActivation', it starts automatically, non-block current thread.
+            Task.Delay(10 * 1000);
+
+            // throw exception 'Start may not be called on a promise-style task.'
+            // because task status ='WaitingForActivation', task created implicitly; it starts automatically, don't use Start to schedule it again.
+            Task.Delay(10 * 1000).Start();
+
+            // wait 10s, block current thread
+            Task.Delay(10 * 1000).Wait();
+
+            // wait 10s, but non-block current thread, because of async/await machinism
+            await Task.Delay(10 * 1000);
+
+            // wait/sleep 10s, block current thread
+            Thread.Sleep(10 * 1000);
+    ```
+
+### Parallel
 
 # References
     - CLR Via C#, 4th Edition, by `Jeffrey Richter`
