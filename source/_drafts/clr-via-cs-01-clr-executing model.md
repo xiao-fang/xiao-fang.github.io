@@ -1,6 +1,7 @@
 ---
 title: "[CLR via C#] CLR's Execution Model"
 date: 05/22/2017 14:00
+layout: false
 categories:
 - CLR via C#
 tags:
