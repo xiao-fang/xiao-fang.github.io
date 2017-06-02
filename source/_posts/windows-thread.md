@@ -26,6 +26,8 @@ OS only one `Thread` of execution that ran through the entire system.
 - depends on and limit to CPU cores
 - `process` is expensive in Windows, it may take several seconds to create a process (allocate & initialize memory, load exe/dll for disk, etc.)
 
+<!-- more -->
+
 ### Thread
 - every `Thread` has each of following: `Thread Kernal Object`, `Thread Environment Block (TEB)`, `User-mode Stack`, `Kernal-mode Stack`, `DLL thread-attach and thread-detach notifications`(unmanaged programming only). => all these would be allocated when creating a thread => so a thread itself may take some momery space (at least 1MB+ per thread).
 

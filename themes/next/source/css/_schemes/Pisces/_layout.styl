@@ -1,7 +1,8 @@
 .header {
   position: relative;
   margin: 0 auto;
-  width: $main-desktop;
+  //width: $main-desktop;
+  width: 80%;
 
   +tablet() {
     width: auto;
@@ -47,7 +48,8 @@
 }
 
 .container .main-inner {
-  width: $main-desktop;
+  //width: $main-desktop;
+  width: 80%;
 
   +tablet() {
     width: auto;
@@ -61,7 +63,9 @@
   float: right;
   box-sizing: border-box;
   padding: $content-desktop-padding;
-  width: $content-desktop;
+  //width: $content-desktop;
+  width: calc(100% - 260px);
+
   background: white;
   min-height: 700px;
   box-shadow: $box-shadow-inner;
@@ -124,17 +128,4 @@
     padding-left: 0;
     padding-right: 260px;
   }
-}
-
-
-.header {
-  width: 80%;
-}
-
-.container .main-inner {
-  width: 80%;
-}
-
-.content-wrap {
-  width: calc(100% - 260px);
 }
