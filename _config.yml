@@ -74,6 +74,13 @@ archive_generator:
   monthly: false
   daily: false
 
+# Algolia Search
+algolia:
+  applicationID: 'AYXL0AULE5'
+  apiKey: 'e5e91236d8d39042373d70d6c800244b'
+  indexName: 'xiao-fang.me'
+  chunkSize: 5000
+
 search:
   path: search.xml
   field: post
