@@ -76,10 +76,10 @@ archive_generator:
 
 # Algolia Search
 algolia:
-  applicationID: "AYXL0AULE5"
-  apiKey: "e5e91236d8d39042373d70d6c800244b"
-  adminApiKey: "dc64f98b0d27fa901ffdf410d7598da3"
-  indexName: "xiao-fang.me"
+  applicationID: AYXL0AULE5
+  apiKey: e5e91236d8d39042373d70d6c800244b
+  adminApiKey: $GH_DEPLOY_TOKEN
+  indexName: xiao-fang.me
   chunkSize: 5000
 
 search:
