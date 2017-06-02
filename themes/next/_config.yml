@@ -530,8 +530,8 @@ vendors:
 
   # Internal version: 1.0.0
   # https://github.com/hustcc/canvas-nest.js
-  canvas_nest:
-
+  canvas_nest: false
+  three_waves: false
 
 
 # Assets
