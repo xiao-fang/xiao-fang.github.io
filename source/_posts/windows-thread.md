@@ -11,15 +11,15 @@ tags:
 
 > DRAFT VERSION
 
-# Thread Basic
+## Thread Basic
 
-### background
+### Background
 OS only one `Thread` of execution that ran through the entire system.
 - includes both OS code/data and application code/data
 - exclusive, prevent other tasks from executing
 - application may cause infinite loop and block entire OS
 
-### Process:
+### Process
 - each instance of application is a `process`
 - `process` is a collection of resources that's used by a single instance of application
 - virtual address space, isolated domain protection
@@ -69,7 +69,7 @@ OS only one `Thread` of execution that ran through the entire system.
 -  CLR consider every thread to be either a foregroud or a backgroud thread.
 -  When all foreground threads in a process stop running, then CLR force stops any backgroud threads regardless if background threads are still running.
 
-# Compute-Bound Async Operations
+## Compute-Bound Async Operations
 
 ### Thread Pool
 - why threads should be improved?
@@ -226,12 +226,13 @@ OS only one `Thread` of execution that ran through the entire system.
 
 ### Parallel
 
-# References
+## References
+
 - CLR Via C#, 4th Edition, by `Jeffrey Richter`
 - [进程与线程的一个简单解释](http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html)
 - [Visual C#: Thread.Sleep vs. Task.Delay](https://social.technet.microsoft.com/wiki/contents/articles/21177.visual-c-thread-sleep-vs-task-delay.aspx)
 
-# About Me
+## About Me
 
 ```javascript
 var about = {
