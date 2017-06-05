@@ -17,39 +17,38 @@ tags:
 ```
 
 <pre style="background-color: #272822">
-<DIV class="161022" style="font-family: 'Consolas';font-size: 14px;text-align: start;text-indent: 0px;margin: 0;">
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #8DD006;background-color: #272822;">C:\Workspace\xiao-fang.github.io </span><span style="color: #F3044B;background-color: #272822;">(hexo) </span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #7C7C7C;background-color: #272822;">λ </span><span style="color: #CACACA;background-color: #272822;">git log --max-count=5 </span>
-<span style="color: #B6B649;background-color: #272822;">commit f4f30751999a62428347a3681f3dea175d6301d2</span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
-<span style="color: #CACACA;background-color: #272822;">Date: Mon Jun 5 16:47:28 2017 +0800 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">add a new post 'pretty git log', and update an old post </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #B6B649;background-color: #272822;">commit 9c883d710af69845cce226632cdd7bb361fbab3c</span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
-<span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:16:08 2017 +0800 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">update adminKey for algolia with TRAVIS env var. </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #B6B649;background-color: #272822;">commit a6e7c00d6200629f62a9d402659a2910d5beda44</span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
-<span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:02:53 2017 +0800 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">update adminKey for algolia. </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #B6B649;background-color: #272822;">commit 579b0cab229fe60000dfda03bc2d935bfa742ce3</span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
-<span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:14:55 2017 +0800 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. update algolia version from 1.01. to 0.2.0 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #B6B649;background-color: #272822;">commit 233120a04db71f3eca60f3524e0cab287f302b4c</span><span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
-<span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:05:59 2017 +0800 </span>
-<span style="color: #CACACA;background-color: #272822;"></span>
-<span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #8DD006;background-color: #272822;">C:\Workspace\xiao-fang.github.io </span><span style="color: #F3044B;background-color: #272822;">(hexo) </span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #7C7C7C;background-color: #272822;">λ </span><span style="color: #CACACA;background-color: #272822;">git log --max-count=5 </span>
+    <span style="color: #B6B649;background-color: #272822;">commit f4f30751999a62428347a3681f3dea175d6301d2</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Mon Jun 5 16:47:28 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">add a new post 'pretty git log', and update an old post </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 9c883d710af69845cce226632cdd7bb361fbab3c</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:16:08 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">update adminKey for algolia with TRAVIS env var. </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit a6e7c00d6200629f62a9d402659a2910d5beda44</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:02:53 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">update adminKey for algolia. </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 579b0cab229fe60000dfda03bc2d935bfa742ce3</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:14:55 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. update algolia version from 1.01. to 0.2.0 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 233120a04db71f3eca60f3524e0cab287f302b4c</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao.fang@outlook.com &lt;xiao.fang@outlook.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:05:59 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. </span>
 <br>
 </pre>
 
