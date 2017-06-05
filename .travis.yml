@@ -13,7 +13,7 @@ install:
 
 script:
   - hexo clean
-  - hexo algolia
+    # - hexo algolia
   - hexo generate
 
 after_success:
