@@ -2,8 +2,8 @@
 title: Install Docker On CentOS 7
 date: 04/25/2017 14:00
 categories:
-- Notes
-- DevOps
+- 学习笔记
+- Docker
 tags:
 - CentOS
 - Docker

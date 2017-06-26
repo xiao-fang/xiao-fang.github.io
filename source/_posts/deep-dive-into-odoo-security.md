@@ -1,10 +1,13 @@
 ---
 title: Deep Dive Into Odoo Security
 date: 03/31/2017
+categories:
+- 学习笔记
+- Python
 tags:
-    - odoo
-    - python
-    - others
+- odoo
+- python
+- others
 ---
 
 #### Deep Dive Into Odoo Security

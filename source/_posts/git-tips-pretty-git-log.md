@@ -1,7 +1,7 @@
 ---
 title: Pretty Git Log
 date: 06/06/2017
-category: Tips
+category: 拾遗补阙
 tags:
     - Git
     - Tips

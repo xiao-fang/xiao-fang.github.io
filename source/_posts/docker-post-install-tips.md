@@ -2,8 +2,8 @@
 title: General Post-Installation Steps for Docker on CentOS
 date: 04/25/2017 16:00
 categories:
-- Notes
-- DevOps
+- 学习笔记
+- Docker
 tags:
 - CentOS
 - Docker

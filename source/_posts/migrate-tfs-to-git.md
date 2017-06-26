@@ -1,7 +1,8 @@
 ---
 title: Migrate TFS Project to Git
 date: 04/27/2017 16:30
-category:
+category: 拾遗补阙
+
 tags:
 - TFS
 - Git

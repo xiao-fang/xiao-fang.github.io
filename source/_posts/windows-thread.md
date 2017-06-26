@@ -1,12 +1,15 @@
 ---
 title: Windows Thread
 date: 05/17/2017
-category: Notes
+categories:
+- 学习笔记
+- .NET
+
 tags:
-    - Windows
-    - CLR
-    - CLR via C#
-    - Thread
+- Windows
+- CLR
+- CLR via C#
+- Thread
 ---
 
 > DRAFT VERSION

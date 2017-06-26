@@ -2,7 +2,7 @@
 title: How to Install PostgreSQL on CentOS 7?
 date: 05/11/2017 17:00
 categories:
-- Notes
+- 学习笔记
 tags:
 - CentOS
 - PostgreSQL

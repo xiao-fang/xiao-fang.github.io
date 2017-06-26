@@ -1,6 +1,9 @@
 ---
 title: Python Coding Style
 date: 03/31/2017
+categories:
+- 学习笔记
+- Python
 tags:
     - python
     - others

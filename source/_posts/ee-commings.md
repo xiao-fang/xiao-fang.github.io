@@ -1,7 +1,7 @@
 ---
 title: Live By Love
 date: 04/08/2017
-category: leisure
+category: 闲言随笔
 tags:
     - Quote
 ---
