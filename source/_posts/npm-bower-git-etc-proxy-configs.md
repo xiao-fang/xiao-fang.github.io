@@ -103,7 +103,7 @@ echo %https_proxy%
 
 ## Bash Shell
 
-File Name: .bash_profile or .bashrc
+File Name: `.bash_profile` or `.bashrc`
 
 ```bash
 export http_proxy=[Your Proxy]:[Proxy Port]
@@ -112,7 +112,7 @@ export npm_config_proxy=[Your Proxy]:[Proxy Port]
 export npm_config_https_proxy=[Your Proxy]:[Proxy Port]
 ```
 
-Note: After updated the .bash_profile or .bashrc, you should run one of the following commands to make the configuration active for the current session.
+Note: After updated the `.bash_profile` or `.bashrc`, you should run one of the following commands to make the configuration active for the current session.
 
 ```bash
 source ~/.bashrc
@@ -124,11 +124,11 @@ source ~/.bash_profile
 
 ## Bower
 
-There is no command line that I found for configuring bower. Instead you need to create a .bowerrc file in the users home directory.
+There is no command line that I found for configuring bower. Instead you need to create a `.bowerrc` file in the users home directory.
 
-On Windows: %userprofile% directory.
+On Windows: `%userprofile%` directory.
 
-On Linux: ~/
+On Linux: `~/`
 
 ### Creating .bowerrc file on Windows
 
@@ -155,7 +155,7 @@ Windows Explorer unfortunately does not allow you to create files without extens
 
 ## Git
 
-You can also set the proxy settings below to be system wide with the –system switch.
+You can also set the proxy settings below to be system wide with the `–system` switch.
 
 ### Set Proxy
 
@@ -213,7 +213,7 @@ npm config delete https-proxy
 npm config delete proxy
 ```
 
-### View Proxy Configurations:
+### View Proxy Configurations
 
 ```bash
 npm config get https-proxy
@@ -231,13 +231,16 @@ https-proxy=http://[Your Proxy]:[Proxy Port]
 
 ## Ruby Gem Install
 
-If you have set the proxy in the .bash_profile or .bashrc, then Ruby should pick it up.
+If you have set the proxy in the `.bash_profile` or `.bashrc`, then Ruby should pick it up.
 
 If you need to manually set it
 
 ### Linux
 
-export http_proxy=[Your Proxy]:[Proxy Port] sudo gem install [your gem name]
+```bash
+export http_proxy=[Your Proxy]:[Proxy Port]
+sudo gem install [your gem name]
+```
 
 ### Windows
 
@@ -250,7 +253,7 @@ gem install [your gem name]
 
 ## Ionic Start Command
 
-In order to run the ionic start command behind a proxy, you need start the command out with the Proxy information.
+In order to run the `ionic start` command behind a proxy, you need start the command out with the Proxy information.
 
 ### Linux
 
@@ -269,7 +272,7 @@ ionic start [App Name] [Template Name]
 
 ## Android SDK
 
-The android SDK uses ~/.android/androidtool.cfg file to define the proxy information. If the file does not exist, go ahead and create it.
+The android SDK uses `~/.android/androidtool.cfg` file to define the proxy information. If the file does not exist, go ahead and create it.
 
 ``` bash
 http.proxyHost=[Your Proxy]
@@ -282,9 +285,9 @@ http.proxyPort=[Proxy Port]
 
 When trying to build an Android project that uses Gradle, you may need to configure the proxy for it.
 
-On Windows: %userprofile%/.gradle.properties
+On Windows: `%userprofile%/.gradle.properties`
 
-``` cmd
+```gradle
 systemProp.http.proxyHost=[Your Proxy]
 systemProp.http.proxyPort=[Proxy Port]
 systemProp.http.nonProxyHosts=*.nonproxyrepos.com|localhost
