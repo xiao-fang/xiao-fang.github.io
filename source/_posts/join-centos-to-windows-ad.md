@@ -100,9 +100,10 @@ realm: Couldn't join realm: Necessary packages are not installed: oddjob, oddjob
 
 ## Have a check
 
-> Note: Though joined into domain successfully as above, it may still take some time to sync to take effect for following check. (It takes above 20 minutes in my demo environment.)
+> **Note**: Though joined into domain successfully as above, it may still take some time to sync to take effect for following check.
+(It takes above 20 minutes in my demo environment.)
 
-- list realms, here should list the domain just added.
+- List realms, here should list the domain just added.
 
 ```bash
 [root@testvm ~]# realm list
