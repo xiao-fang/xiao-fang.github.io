@@ -1,5 +1,15 @@
+---
+title: Lightweight Docker Image with Node.js + Git Runtime
+date: 11/08/2017 10:30
+categories:
+- 学以致用
+- Docker
 
-### Lightweight Docker Image with Node.js + Git Runtime
+tags:
+- Docker
+- Node.Js
+- Git
+---
 
 It's now very popular and convinient to use `docker` as powerful development and deployment tool. For me, node.js and git are heavily used in daily works.
 
