@@ -60,3 +60,18 @@ Now we can see the size of `realedward/node-git-alpine` image is only about *90M
 realedward/node-git-alpine  latest              ae12ac0300d1        18 hours ago        92.8 MB
 
 ```
+
+### Show Time - Quick Node.Js + Git Runtime
+
+Here comes a demo to quick setup Node.js + Git runtime via only one command line `docker run -it --rm realedward/node-git-alpine /bin/sh`.
+
+``` bash
+# docker run -it --rm realedward/node-git-alpine /bin/sh
+/ # node -v
+v9.0.0
+/ # npm -v
+5.5.1
+/ # git --version
+git version 2.13.5
+/ #
+```
