@@ -37,6 +37,8 @@ var_dump(maybe_unserialize($opt)) ;
 <br /> <b>Notice</b>: unserialize(): Error at offset 47 of 55 bytes in <b>[...][...]</b> on line <b>69</b><br /> bool(false)
 ```
 
+<!-- more -->
+
 Above issue, caused by different database charest encoding between from both MySQL databases, that can be resolve by following two steps.
 
 #### step 1 - correct existing mis-match encoding data
