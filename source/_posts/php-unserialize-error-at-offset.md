@@ -1,5 +1,5 @@
 ---
-title: PHP unserialize() [function.unserialize]: Error at offset
+title: "PHP unserialize() [function.unserialize]: Error at offset"
 date: 11/16/2017 18:00
 categories:
 - 学以致用
@@ -45,7 +45,7 @@ Add a new method `serialize_corrector` and apply it **before** a serialized data
 
 ```php
 function serialize_corrector($data){
-return preg_replace_callback('!s:(\d+):"(.*?)";!', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $data);
+    return preg_replace_callback('!s:(\d+):"(.*?)";!', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $data);
 }
 
 function maybe_unserialize( $original ) {
@@ -56,19 +56,9 @@ function maybe_unserialize( $original ) {
 	return $original;
 }
 ```
-then
+then correct ~
 
 ```php
-function serialize_corrector($data){
-    return preg_replace_callback('!s:(\d+):"(.*?)";!', function($m) { return 's:'.strlen($m[2]).':"'.$m[2].'";'; }, $data);
-}
-
-function maybe_unserialize( $original ) {
-	if ( is_serialized( $original ) )
-	  return unserialize( serialize_corrector ($original) );
-	return $original;
-}
-
 $opt ='a:2:{s:36:"field_a";s:2:"on";s:31:"field_b";s:2:"off";}';
 var_dump(maybe_unserialize($opt)) ;
 
@@ -83,4 +73,4 @@ array(2) { ["field_a"]=> string(2) "on" ["field_b"]=> string(3) "off" }
 
 
 #### References
-[unserialize() [function.unserialize]: Error at offset](https://stackoverflow.com/questions/10152904/unserialize-function-unserialize-error-at-offset/)
+ - https://stackoverflow.com/questions/10152904/unserialize-function-unserialize-error-at-offset
