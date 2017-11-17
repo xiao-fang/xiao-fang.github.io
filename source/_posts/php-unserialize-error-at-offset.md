@@ -12,8 +12,10 @@ tags:
 
 These days I meet a strange issue that I tried to publish my WordPress site from local hosted to a cloud Linux environment.
 
-local php --, mysql --
-cloud php --, mysql --
+| MySQL Env | Charset | Collation |
+| - | - | - |
+| Local      | utf8 -- UTF-8 Unicode | utf8_general_ci |
+| Cloud Linux | utf8mb4 -- UTF-8 Unicode | utf8mb4_unicode_ci |
 
 After days' deep investigation (a php starter) I found that the root cause is the `unserialize()` issue. There is a function `maybe_unserialize` in source code as following, that process an unsafe `@unserialize` the original data from MySQL databaes.
 
@@ -70,8 +72,8 @@ array(2) { ["field_a"]=> string(2) "on" ["field_b"]=> string(3) "off" }
 
 
 ####  step 2 - update database encoding
- - update the datbase `charset` to `utf8mb4 -- UTF-8 Unicode`
- - update the database `collation` to `utf8mb4_unicode_ci`
+ - update the datbase `charset` to `utf8 -- UTF-8 Unicode`
+ - update the database `collation` to `utf8_general_ci`
 
 
 #### References
