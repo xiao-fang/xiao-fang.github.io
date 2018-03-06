@@ -9,7 +9,7 @@ category: 闲言随笔
 
 <blockquote class="blockquote-center" >
 春来新绿清明天, 小遁江城有余闲.
-山环水绕是茶园, 采得春茶换酒钱.
+山环水绕下茶园, 采得春茶换酒钱.
 </blockquote>
 
 
