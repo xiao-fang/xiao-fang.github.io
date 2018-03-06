@@ -13,4 +13,6 @@ category: 闲言随笔
 结成一手链, 遗我心中意.
 </blockquote>
 
+![](/uploads/poem-caozhuzi.jpg)
+
 
