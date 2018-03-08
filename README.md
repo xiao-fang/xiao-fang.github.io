@@ -7,4 +7,3 @@
 | Theme by  | NexT | https://github.com/iissnan/hexo-theme-next |
 | Source on | xiao-fang.github.io | https://github.com/xiao-fang/xiao-fang.github.io  (`hexo branch`) |
 | Assets on | xiao-fang.github.io | https://github.com/xiao-fang/xiao-fang.github.io (`master branch`) |
-| Draft | xiao-fang.github.io.hexo (`Obsolete`) | https://github.com/xiao-fang/xiao-fang.github.io.hexo |
