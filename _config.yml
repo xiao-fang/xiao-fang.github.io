@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: xiao-fang.me
+title: xiao-fang.cc
 subtitle: 一粟生
 description: 才子詞人, 自是白衣卿相
 author: "xiao-fang"
@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://xiao-fang.me
+url: http://xiao-fang.cc
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -79,7 +79,7 @@ algolia:
   applicationID: AYXL0AULE5
   apiKey: e5e91236d8d39042373d70d6c800244b
   adminApiKey: $GH_DEPLOY_TOKEN
-  indexName: xiao-fang.me
+  indexName: xiao-fang.cc
   chunkSize: 5000
 
 search:

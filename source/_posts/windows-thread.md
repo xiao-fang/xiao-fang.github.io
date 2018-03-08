@@ -240,7 +240,7 @@ OS only one `Thread` of execution that ran through the entire system.
 ```javascript
 var about = {
     name:'xiao-fang',
-    site:'http://xiao-fang.me',
+    site:'http://xiao-fang.cc',
     intro: 'code to live, live to code...'
 }
 ```
