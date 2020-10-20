@@ -1,3 +1,17 @@
+---
+title: Quick Start A Local-Hosted K8S Environment
+date: 10/20/2020
+categories:
+- 学习笔记
+- K8S
+
+tags:
+- Kubernetes
+- minikube
+- CentOS
+- Kubectl
+---
+
 # Quick Start A Local-Hosted K8S Environment
 
 *Kubernetes* (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from [CNCF](https://www.cncf.io/). 
