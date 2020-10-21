@@ -140,8 +140,15 @@ $ kubectl proxy --address='0.0.0.0' --disable-filter=true &
 Request filter disabled, your proxy is vulnerable to XSRF attacks, please be cautious
 Starting to serve on [::]:8001
 
-# or start dashboard and proxy at backend at the same time
+# (optional) or start dashboard and proxy at backend at the same time
 minikube dashboard & kubectl proxy --address='0.0.0.0' --disable-filter=true &
+
+# (optional) how to stop a `backgroud` kubectl proxy?
+# grep from netstat
+$ netstat -tulp | grep kubectl
+tcp6       0      0 [::]:vcom-tunnel        [::]:*                  LISTEN      13655/kubectl
+# then kill the process by <pid>
+sudo kill -9 <pid>
 ```
 
 ![K8S Dashboard](https://d33wubrfki0l68.cloudfront.net/349824f68836152722dab89465835e604719caea/6e0b7/images/docs/ui-dashboard.png)
@@ -391,6 +398,57 @@ Handling connection for 8080
 # (optional) open firewall port
 $ firewall-cmd --add-port=8080/tcp --permanent
 $ firewall-cmd --reload
+```
+
+### minikube addons
+
+`minikube` has a built-in list of applications and services that may be easily deployed, such as Istio or Ingress. To list the available addons for your version of `minikube`:
+
+```bash
+$ minikube addons list
+|-----------------------------|----------|--------------|
+|         ADDON NAME          | PROFILE  |    STATUS    |
+|-----------------------------|----------|--------------|
+| ambassador                  | minikube | disabled     |
+| csi-hostpath-driver         | minikube | disabled     |
+| dashboard                   | minikube | enabled ✅   |
+| default-storageclass        | minikube | enabled ✅   |
+| efk                         | minikube | disabled     |
+| freshpod                    | minikube | disabled     |
+| gcp-auth                    | minikube | disabled     |
+| gvisor                      | minikube | disabled     |
+| helm-tiller                 | minikube | disabled     |
+| ingress                     | minikube | enabled ✅   |
+| ingress-dns                 | minikube | disabled     |
+| istio                       | minikube | disabled     |
+| istio-provisioner           | minikube | disabled     |
+| kubevirt                    | minikube | disabled     |
+| logviewer                   | minikube | disabled     |
+| metallb                     | minikube | disabled     |
+| metrics-server              | minikube | disabled     |
+| nvidia-driver-installer     | minikube | disabled     |
+| nvidia-gpu-device-plugin    | minikube | disabled     |
+| olm                         | minikube | disabled     |
+| pod-security-policy         | minikube | disabled     |
+| registry                    | minikube | disabled     |
+| registry-aliases            | minikube | disabled     |
+| registry-creds              | minikube | disabled     |
+| storage-provisioner         | minikube | enabled ✅   |
+| storage-provisioner-gluster | minikube | disabled     |
+| volumesnapshots             | minikube | disabled     |
+|-----------------------------|----------|--------------|
+
+# to enable an add-on:
+$ minikube addons enable <name>
+
+# to enable an addon at start-up, where –addons option can be specified multiple times:
+$ minikube start --addons <name1> --addons <name2>
+
+# for addons that expose a browser endpoint, you can quickly open them with:
+$ minikube addons open <name>
+
+# to disable an addon:
+$ minikube addons disable <name>
 ```
 
 ## Reference
