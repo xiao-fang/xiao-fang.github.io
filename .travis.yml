@@ -6,7 +6,7 @@ before_install:
   - git config --global push.default matching
   - git config --global user.name "xiao-fang"
   - git config --global user.email "xiao.fang@outlook.com"
-  - npm install hexo-cli@1.1.0 -g
+  - npm install hexo-cli -g
 
 install:
   - npm install --save

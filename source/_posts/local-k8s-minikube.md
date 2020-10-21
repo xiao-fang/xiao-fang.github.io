@@ -3,7 +3,7 @@ title: Quick Start A Local-Hosted K8S Environment
 date: 10/20/2020
 categories:
 - 学习笔记
-- K8S
+- Kubernetes
 
 tags:
 - Kubernetes
@@ -12,13 +12,13 @@ tags:
 - Kubectl
 ---
 
-# Quick Start A Local-Hosted K8S Environment
+ <!-- Quick Start A Local-Hosted K8S Environment -->
 
 *Kubernetes* (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from [CNCF](https://www.cncf.io/). 
 
 All cloud service providers like AWS, Azure, Aliyun, Tecent Cloud are now providing cloud-based and easy-to-use K8S infrastructure.
 
-Here use [minikue](https://minikube.sigs.k8s.io/docs/start/) to quick start a new local K8S environment for development.
+Here uses [minikue](https://minikube.sigs.k8s.io/docs/start/) to quick start a new local K8S environment for development.
 
 ![K8S Architecture](https://raw.githubusercontent.com/kubernetes/kubernetes/587d164307de060d271f10f2386f39153360fba9/docs/design/architecture.svg)
 
@@ -26,7 +26,7 @@ Here use [minikue](https://minikube.sigs.k8s.io/docs/start/) to quick start a ne
 
 `Minikube` supports container or virtual machine manager, such as [Docker, Hyperkit, Hyper-V, KVM, Parallels, Podman, VirtualBox, or VMWare](https://minikube.sigs.k8s.io/docs/start/#what-youll-need). 
 
-I start from CentOS 7 VM (*2+CPU, 4GB memory, 20+GB disk*).
+I start from CentOS 7 VM (*2+ cpu, 4GB memory, 20+GB disk*).
 
 - Install `Docker` 
   - refer to [Install Docker Engine on CentOS](https://docs.docker.com/engine/install/centos/)
@@ -36,6 +36,8 @@ I start from CentOS 7 VM (*2+CPU, 4GB memory, 20+GB disk*).
 
 - Install minikube
   - refer to [minikube start](https://minikube.sigs.k8s.io/docs/start/)
+
+<!-- more -->
 
 ## Start a new cluster
 
@@ -201,7 +203,7 @@ spec:
   #...
 ```
 
-(Optional) If  use private regitry from AWS, Azure, DockerHub, `minikube` offers the `registry-creds` addon to easily haddle the credentials. Please refer to [minikube: Using a Private Registry](https://minikube.sigs.k8s.io/docs/handbook/registry/).
+(Optional) If  use private registry from AWS, Azure, DockerHub, `minikube` offers the `registry-creds` addon to easily haddle the credentials. Please refer to [minikube: Using a Private Registry](https://minikube.sigs.k8s.io/docs/handbook/registry/).
 
 (Optional) If we use `docker` directly without `kubectl`, following steps to use an insecure registry.
 
@@ -289,9 +291,9 @@ serilog.json
 - Create Secret to store senstive informations such as passwords, tokens, ssk keys.
 
 `Secret` used with a Pod in three ways: 
-  a. a file in `volume` mounted to pods
-  b. as container environment variable
-  c. by the `kubelet` when pulling images (see above registry secret)
+  - a. a file in `volume` mounted to pods
+  - b. as container environment variable
+  - c. by the `kubelet` when pulling images (see above registry secret)
 
 ```bash
 # create secret --from-file or --from-literal

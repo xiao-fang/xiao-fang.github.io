@@ -12,3 +12,4 @@ public/
 .idea/xiao-fang.github.io.hexo.iml
 .idea/markdown-navigator.xml
 .idea/markdown-navigator/
+/package-lock.json
