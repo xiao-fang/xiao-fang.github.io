@@ -265,7 +265,7 @@ spec:
             defaultMode: 420
       containers:
         - name: dev-nop
-          image: 'chszctnr02:8082/echosens-cecs/is-sts:0.dev.0.201019.ed1730bb'
+          image: 'chszctnr02:8082/some-namespace/is-sts:0.dev.0.201019.ed1730bb'
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
@@ -322,7 +322,7 @@ spec:
             secretName: localhost-cert      # the secret name
       containers:
         - name: is-sts
-          image: 'chszctnr02:8082/echosens-cecs/is-sts:1.0.8.200929.3226b1e1'
+          image: 'chszctnr02:8082/some-namespace/is-sts:1.0.8.200929.3226b1e1'
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
