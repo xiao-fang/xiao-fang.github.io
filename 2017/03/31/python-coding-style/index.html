@@ -1,0 +1,1284 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="python,others,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="1.  Python 代码规范# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com 分号( ; ) 不要在行尾加分号, 也不要用分号将两条命令放在同一行.  行长度  每行不超过 80 个字符 例外:  长的导入模块语句; 注释里的URL   换行 / 行间连接  不要使用反斜杠连接行. Python会将圆括号 ( ), 中">
+<meta name="keywords" content="python,others">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Coding Style">
+<meta property="og:url" content="http://xiao-fang.cc/2017/03/31/python-coding-style/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="1.  Python 代码规范# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com 分号( ; ) 不要在行尾加分号, 也不要用分号将两条命令放在同一行.  行长度  每行不超过 80 个字符 例外:  长的导入模块语句; 注释里的URL   换行 / 行间连接  不要使用反斜杠连接行. Python会将圆括号 ( ), 中">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Coding Style">
+<meta name="twitter:description" content="1.  Python 代码规范# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com 分号( ; ) 不要在行尾加分号, 也不要用分号将两条命令放在同一行.  行长度  每行不超过 80 个字符 例外:  长的导入模块语句; 注释里的URL   换行 / 行间连接  不要使用反斜杠连接行. Python会将圆括号 ( ), 中">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2017/03/31/python-coding-style/">
+
+
+
+
+
+  <title> Python Coding Style | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2017/03/31/python-coding-style/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Python Coding Style
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-31T00:00:00+00:00">
+                2017-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/31/python-coding-style/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/31/python-coding-style/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/31/python-coding-style/" class="leancloud_visitors" data-flag-title="Python Coding Style">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4><span id="1-python-代码规范">1.  Python 代码规范</span></h4><pre><code># Deep Dive Into Odoo Security
+© Edward | xiao.fang@outlook.com
+</code></pre><h5><span id="分号">分号( ; )</span></h5><blockquote>
+<p>不要在行尾加分号, 也不要用分号将两条命令放在同一行.</p>
+</blockquote>
+<h5><span id="行长度">行长度</span></h5><blockquote>
+<ul>
+<li>每行不超过 <strong><em>80</em></strong> 个字符</li>
+<li>例外:  长的导入模块语句; 注释里的URL</li>
+</ul>
+</blockquote>
+<h5><span id="换行-行间连接">换行 / 行间连接</span></h5><blockquote>
+<ul>
+<li>不要使用反斜杠连接行.</li>
+<li>Python会将圆括号 ( ), 中括号 [ ], 花括号 { } 中的行隐式的连接起来.</li>
+</ul>
+</blockquote>
+<p>所以, 你可以利用这个特点. 如果需要, 你可以在表达式外围增加一对额外的圆括号.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (width == <span class="number">0</span> <span class="keyword">and</span> height == <span class="number">0</span> <span class="keyword">and</span></span><br><span class="line">    color == <span class="string">'red'</span> <span class="keyword">and</span> emphasis == <span class="string">'strong'</span>):</span><br></pre></td></tr></table></figure></p>
+<p>如果一个文本字符串在一行放不下, 可以使用圆括号来实现隐式行连接:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = (<span class="string">'This will build a very long long long and long'</span></span><br><span class="line">       <span class="string">'long long long long long and long long long string'</span>)</span><br></pre></td></tr></table></figure></p>
+<p>在注释中，如果必要，将长的URL放在一行上.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL单行注释 [Good]</span></span><br><span class="line"><span class="comment"># https://www.python.org/dev/peps/pep-0008/#public-and-internal-interfaces</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># URL跨行'\'连接注释 [Bad]</span></span><br><span class="line"><span class="comment"># https://www.python.org/dev/peps/pep-0008/#\</span></span><br><span class="line"><span class="comment"># public-and-internal-interfaces</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h5><span id="括号">括号</span></h5><blockquote>
+<ul>
+<li>原则: 宁缺勿滥</li>
+</ul>
+</blockquote>
+<p>除非是用于实现行连接, 或者 ( ) 用来表示Tuple, 否则不要在返回语句或条件语句中使用括号.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Yes: <span class="keyword">if</span> foo:</span><br><span class="line">            bar()</span><br><span class="line">        <span class="keyword">while</span> x:</span><br><span class="line">            x = bar()</span><br><span class="line">        <span class="keyword">if</span> x <span class="keyword">and</span> y:</span><br><span class="line">            bar()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> x:</span><br><span class="line">            bar()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> foo</span><br><span class="line">        <span class="keyword">for</span> (x, y) <span class="keyword">in</span> dict.items(): ...</span><br><span class="line"></span><br><span class="line">No:  <span class="keyword">if</span> (x):</span><br><span class="line">            bar()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span>(x):</span><br><span class="line">            bar()</span><br><span class="line">        <span class="keyword">return</span> (foo)</span><br></pre></td></tr></table></figure></p>
+<h5><span id="缩进">缩进</span></h5><blockquote>
+<p>用 <strong><em>4个空格</em></strong> 来缩进代码</p>
+</blockquote>
+<p>不要: Tab, 或者 Tab和空格混用.</p>
+<p>对于行连接的情况, 你应该: 要么垂直对齐换行的元素;  或者使用4空格的悬挂式缩进(这时第一行不应该有参数).<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 垂直对齐开分隔符(opening delimiter)</span></span><br><span class="line">foo = long_function_name(var_one, var_two,</span><br><span class="line">						 var_three, var_four)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4空格悬挂缩进, 首行无参数</span></span><br><span class="line">foo = long_function_name(</span><br><span class="line">	var_one, var_two, var_three,</span><br><span class="line">	var_four)</span><br></pre></td></tr></table></figure></p>
+<h5><span id="空行">空行</span></h5><blockquote>
+<p>顶级定义之间空两行, 方法定义之间空一行<br>顶级定义, 如, 类(<strong><em>class</em></strong>), 函数 (<strong><em>function</em></strong>), 模块引入(<strong><em>import</em></strong>) 之间空两行;<br>方法(<strong><em>method</em></strong>)定义, 类定义与第一个方法之间, 都应该空一行.<br>函数或方法中, 某些地方要是你觉得合适, 就空一行.</p>
+</blockquote>
+<h5><span id="空格">空格</span></h5><blockquote>
+<p>按照标准的排版规范来使用标点两边的空格</p>
+</blockquote>
+<p>括号内不要有空格.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Yes: spam(ham[<span class="number">1</span>], &#123;eggs: <span class="number">2</span>&#125;, [])</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No:  spam( ham[ <span class="number">1</span> ], &#123; eggs: <span class="number">2</span> &#125;, [ ] )</span><br></pre></td></tr></table></figure>
+<p>不要在逗号, 分号, 冒号前面加空格, 但应该在它们后面加(除了在行尾).<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Yes: <span class="keyword">if</span> x == <span class="number">4</span>:</span><br><span class="line">		 <span class="keyword">print</span> x, y</span><br><span class="line">	 x, y = y, x</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">No:  <span class="keyword">if</span> x == <span class="number">4</span> :</span><br><span class="line">          <span class="keyword">print</span> x , y</span><br><span class="line">      x , y = y , x</span><br></pre></td></tr></table></figure>
+<p>参数列表, 索引或切片的左括号前不应加空格.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Yes: 	spam(<span class="number">1</span>)</span><br><span class="line">No : 	spam (<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">Yes: 	dict[<span class="string">'key'</span>] = list[index]</span><br><span class="line">No :  	dict [<span class="string">'key'</span>] = list [index]</span><br></pre></td></tr></table></figure></p>
+<p>在二元操作符两边都加上一个空格, 比如赋值(<strong><em>=</em></strong>), 比较(<strong><em>==, &lt;, &gt;, !=, &lt;&gt;, &lt;=, &gt;=, in, not in, is, is not</em></strong>), 布尔(<strong><em>and, or, not</em></strong>).<br>至于算术操作符两边的空格, 两侧务必要保持一致即可.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Yes: 	x == <span class="number">1</span></span><br><span class="line">No:  	x&lt;<span class="number">1</span></span><br></pre></td></tr></table></figure></p>
+<p>当 ‘<strong><em>=</em></strong>‘ 用于指示关键字参数或默认参数值时, 不要在其两侧使用空格.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Yes: 	<span class="function"><span class="keyword">def</span> <span class="title">complex</span><span class="params">(real, imag=<span class="number">0.0</span>)</span>:</span> <span class="keyword">return</span> magic(r=real, i=imag)</span><br><span class="line">No:  	<span class="function"><span class="keyword">def</span> <span class="title">complex</span><span class="params">(real, imag = <span class="number">0.0</span>)</span>:</span> <span class="keyword">return</span> magic(r = real, i = imag)</span><br></pre></td></tr></table></figure>
+<p>不要用空格来垂直对齐多行间的标记, 因为这会成为维护的负担(适用于 <strong><em>:, #, =</em></strong> 等):</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Yes:</span><br><span class="line">     foo = <span class="number">1000</span>  <span class="comment"># comment</span></span><br><span class="line">     long_name = <span class="number">2</span>  <span class="comment"># comment that should not be aligned</span></span><br><span class="line"></span><br><span class="line">     dictionary = &#123;</span><br><span class="line">         <span class="string">"foo"</span>: <span class="number">1</span>,</span><br><span class="line">         <span class="string">"long_name"</span>: <span class="number">2</span>,</span><br><span class="line">         &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">No:</span><br><span class="line">     foo       = <span class="number">1000</span>  <span class="comment"># comment</span></span><br><span class="line">     long_name = <span class="number">2</span>     <span class="comment"># comment that should not be aligned</span></span><br><span class="line"></span><br><span class="line">     dictionary = &#123;</span><br><span class="line">         <span class="string">"foo"</span>      : <span class="number">1</span>,</span><br><span class="line">         <span class="string">"long_name"</span>: <span class="number">2</span>,</span><br><span class="line">         &#125;</span><br></pre></td></tr></table></figure>
+<h5><span id="shebang">Shebang</span></h5><blockquote>
+<p>大部分 <strong><em>.py</em></strong> 文件不必以#!作为文件的开始. 根据 <code>PEP-394 &lt;http://www.python.org/dev/peps/pep-0394/&gt;</code>,  程序的 <strong><em>main</em></strong> 文件应该以 <code>#!/usr/bin/python2</code>或者 <code>#!/usr/bin/python3</code>开始.</p>
+</blockquote>
+<p><code>#!</code>先用于帮助内核找到Python解释器, 但是在导入模块时, 将会被忽略. 因此只有被直接执行的文件中才有必要加入<code>#!</code>.</p>
+<h5><span id="注释">注释</span></h5><blockquote>
+<p>确保对模块, 函数, 方法和行内注释使用正确的风格</p>
+</blockquote>
+<p>文档字符串 (<code>Doc Strings</code>)</p>
+<ul>
+<li>Python有一种独一无二的的注释方式: 使用文档字符串. 文档字符串是包, 模块, 类或函数里的第一个语句. 这些字符串可以通过对象的doc成员被自动提取, 并且被<code>pydoc</code>所用</li>
+</ul>
+<p>模块 (<code>Module</code>)</p>
+<ul>
+<li>每个文件应该包含一个许可样板. 根据项目使用的许可(例如, <code>Apache 2.0, BSD, LGPL, GPL</code>), 选择合适的样板.</li>
+</ul>
+<p>函数 (<code>Function</code>) 和方法 (<code>Method</code>)</p>
+<ul>
+<li>一个函数 (下文所指包括 <code>Function, Method, Generator</code> ) <strong>必须</strong> 要有文档字符串.  (<code>外部不可见/非常短小/简单明了</code>的函数除外)</li>
+<li><p>Args: 列出每个参数的名字, 并在名字后使用一个冒号和一个空格, 分隔对该参数的描述.如果描述太长超过了单行80字符,使用4空格的悬挂缩进. 描述应该包括所需的类型和含义. 如果一个函数接受<em>foo(可变长度参数列表)或者`</em>bar (任意关键字参数)<code>, 应该详细列出</code>foo<code>和</code>**bar`.</p>
+</li>
+<li><p>Returns: (或者 Yields: 用于生成器) 描述返回值的类型和语义. 如果函数返回None, 这一部分可以省略.</p>
+</li>
+<li><p>Raises: 列出与接口有关的所有异常.</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch_bigtable_rows</span><span class="params">(big_table, keys, other_silly_variable=None)</span>:</span></span><br><span class="line">    <span class="string">"""Fetches rows from a Bigtable.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Retrieves rows pertaining to the given keys from the Table instance</span></span><br><span class="line"><span class="string">    represented by big_table....</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        big_table: An open Bigtable Table instance.</span></span><br><span class="line"><span class="string">        keys: A sequence of strings representing the key...</span></span><br><span class="line"><span class="string">        other_silly_variable: Another optional variable, ...</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        A dict mapping keys to, .... For example:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        &#123;'Serak': ('Rigel VII', 'Preparer'),</span></span><br><span class="line"><span class="string">         'Lrrr': ('Omicron Persei 8', 'Emperor')&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        If a key from the keys argument is missing from the dictionary,</span></span><br><span class="line"><span class="string">        then that row was not found in the table.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Raises:</span></span><br><span class="line"><span class="string">        IOError: An error occurred accessing the bigtable.Table object.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>类(<code>Class</code>)</p>
+<ul>
+<li>类应该在其定义下有一个用于描述该类的文档字符串. 如果你的类有公共属性(Attributes), 那么文档中应该有一个属性(Attributes)段. 并且应该遵守和函数参数相同的格式.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""Summary of class here.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Longer class information....</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Attributes:</span></span><br><span class="line"><span class="string">        likes_spam: A boolean indicating if we like SPAM or not.</span></span><br><span class="line"><span class="string">        eggs: An integer count of the eggs we have laid.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, likes_spam=False)</span>:</span></span><br><span class="line">        <span class="string">"""Inits SampleClass with blah."""</span></span><br><span class="line">        self.likes_spam = likes_spam</span><br><span class="line">        self.eggs = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">public_method</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""Performs operation blah."""</span></span><br></pre></td></tr></table></figure>
+<p>块注释和行注释</p>
+<p>对于复杂的操作, 应该在其操作开始前写上若干行注释. 对于不是一目了然的代码, 应在其行尾添加注释.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># We use a weighted dictionary search to find out where i is in</span></span><br><span class="line"><span class="comment"># the array.  We extrapolate position based on the largest num</span></span><br><span class="line"><span class="comment"># in the array and the array size and then do binary search to</span></span><br><span class="line"><span class="comment"># get the exact number.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> i &amp; (i<span class="number">-1</span>) == <span class="number">0</span>:        <span class="comment"># true if i is a power of 2</span></span><br></pre></td></tr></table></figure>
+<h5><span id="类">类</span></h5><blockquote>
+<p>如果一个类不继承自其它类, 就显式的从object继承. 嵌套类也一样.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Yes: <span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span><span class="params">(object)</span>:</span></span><br><span class="line">         <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">     <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">         <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span><span class="params">(object)</span>:</span></span><br><span class="line">             <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">     <span class="class"><span class="keyword">class</span> <span class="title">ChildClass</span><span class="params">(ParentClass)</span>:</span></span><br><span class="line">         <span class="string">"""Explicitly inherits from another class already."""</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">No: <span class="class"><span class="keyword">class</span> <span class="title">SampleClass</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">OuterClass</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">InnerClass</span>:</span></span><br><span class="line">            <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h5><span id="字符串">字符串</span></h5><blockquote>
+<p><code>%</code> 格式化字符串, <code>+</code> 拼接字符串</p>
+</blockquote>
+<p>避免在循环中用+和+=操作符来累加字符串. 由于字符串是不可变的, 这样做会创建不必要的临时对象, 并且导致二次方而不是线性的运行时间.<br>作为替代方案, 你可以将每个子串加入列表, 然后在循环结束后用 <code>.join</code> 连接列表. (也可以将每个子串写入一个 <code>cStringIO.StringIO</code> 缓存中.)<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Yes:	items = [<span class="string">'&lt;table&gt;'</span>]</span><br><span class="line">		<span class="keyword">for</span> last_name, first_name <span class="keyword">in</span> employee_list:</span><br><span class="line">		    items.append(<span class="string">'&lt;tr&gt;&lt;td&gt;%s, %s&lt;/td&gt;&lt;/tr&gt;'</span> % (last_name, first_name))</span><br><span class="line">		items.append(<span class="string">'&lt;/table&gt;'</span>)</span><br><span class="line">		employee_table = <span class="string">''</span>.join(items)</span><br><span class="line"></span><br><span class="line">No: 	employee_table = <span class="string">'&lt;table&gt;'</span></span><br><span class="line">        <span class="keyword">for</span> last_name, first_name <span class="keyword">in</span> employee_list:</span><br><span class="line">            employee_table += <span class="string">'&lt;tr&gt;&lt;td&gt;%s, %s&lt;/td&gt;&lt;/tr&gt;'</span> % (last_name, first_name)</span><br><span class="line">        employee_table += <span class="string">'&lt;/table&gt;'</span></span><br></pre></td></tr></table></figure></p>
+<p>多行字符串使用三重双引号<code>&quot;&quot;&quot;</code>而非三重单引号<code>&#39;&#39;&#39;</code>.<br>文档字符串必须使用三重双引号<code>&quot;&quot;&quot;</code>.</p>
+<h5><span id="文件和sockets">文件和sockets</span></h5><blockquote>
+<p>在文件和sockets结束时, 显式的关闭它.</p>
+</blockquote>
+<p>推荐使用 <a href="http://docs.python.org/reference/compound_stmts.html#the-with-statement" target="_blank" rel="noopener"><code>with</code>语句</a> 以管理文件:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> open(<span class="string">"hello.txt"</span>) <span class="keyword">as</span> hello_file:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> hello_file:</span><br><span class="line">        <span class="keyword">print</span> line</span><br></pre></td></tr></table></figure>
+<p>对于不支持使用 <code>with</code> 语句的类似文件的对象,使用 <code>contextlib.closing()</code> :<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> contextlib</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> contextlib.closing(urllib.urlopen(<span class="string">"http://www.python.org/"</span>)) <span class="keyword">as</span> front_page:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> front_page:</span><br><span class="line">        <span class="keyword">print</span> line</span><br></pre></td></tr></table></figure></p>
+<h5><span id="todo注释">TODO注释</span></h5><blockquote>
+<p>为临时代码使用TODO注释, 它是一种短期解决方案. 但够好了.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># TODO(fxiao@hpe.com): Use a "*" here for string repetition.</span></span><br><span class="line"><span class="comment"># TODO(Edward) Change this to use relations.</span></span><br></pre></td></tr></table></figure>
+<h5><span id="导入-import-格式">导入 ( <code>import</code> ) 格式</span></h5><blockquote>
+<p>每个导入 (<code>import</code>) 应该独占一行</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Yes: <span class="keyword">import</span> os</span><br><span class="line">     <span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">No:  <span class="keyword">import</span> os, sys</span><br></pre></td></tr></table></figure>
+<p>导入总应该放在文件顶部, 按顺序分组:</p>
+<ul>
+<li>标准库导入</li>
+<li>第三方库导入</li>
+<li>应用程序指定导入</li>
+</ul>
+<p>每种分组中, 应该根据每个模块的完整包路径按字典序排序, 忽略大小写.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> foo</span><br><span class="line"><span class="keyword">from</span> foo <span class="keyword">import</span> bar</span><br><span class="line"><span class="keyword">from</span> foo.bar <span class="keyword">import</span> baz</span><br><span class="line"><span class="keyword">from</span> foo.bar <span class="keyword">import</span> Quux</span><br><span class="line"><span class="keyword">from</span> Foob <span class="keyword">import</span> ar</span><br></pre></td></tr></table></figure></p>
+<h5><span id="语句">语句</span></h5><blockquote>
+<p>通常每个语句应该独占一行</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Yes:</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> foo: bar(foo)</span><br><span class="line"></span><br><span class="line">No:</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> foo: bar(foo)</span><br><span class="line">  <span class="keyword">else</span>:   baz(foo)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span>:               bar(foo)</span><br><span class="line">  <span class="keyword">except</span> ValueError: baz(foo)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">      bar(foo)</span><br><span class="line">  <span class="keyword">except</span> ValueError: baz(foo)</span><br></pre></td></tr></table></figure>
+<h5><span id="访问控制">访问控制</span></h5><blockquote>
+<p>在Python中, 对于琐碎又不太重要的访问函数, 你应该直接使用公有变量来取代它们, 这样可以避免额外的函数调用开销. 当添加更多功能时, 你可以用属性(<code>property</code>)来保持语法的一致性.</p>
+</blockquote>
+<h5><span id="命名">命名</span></h5><blockquote>
+<ul>
+<li>所谓”内部(Internal)”表示仅模块内可用, 或者, 在类内是保护或私有的.</li>
+<li>用单下划线(<code>_</code>)开头表示模块变量或函数是<code>protected</code>的(使用<code>import * from</code>时不会包含).</li>
+<li>用双下划线(<code>__</code>)开头的实例变量或方法表示类内私有.</li>
+<li>将相关的类和顶级函数放在同一个模块里. 不像<code>Java</code>, 没必要限制一个类一个模块.</li>
+<li>对类名使用大写字母开头的单词(如<code>CapWords</code>, 即<code>Pascal</code>风格), 但是模块名应该用小写加下划线的方式(如<code>lower_with_under.py</code>). 尽管已经有很多现存的模块使用类似于<code>CapWords.py</code>这样的命名, 但现在已经不鼓励这样做, 因为如果模块名碰巧和类名一致, 这会让人困扰.</li>
+</ul>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Public</th>
+<th style="text-align:left">Internal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Packages</td>
+<td style="text-align:left">lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Modules</td>
+<td style="text-align:left">lower_with_under</td>
+<td style="text-align:left">_lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Classes</td>
+<td style="text-align:left">CapWords</td>
+<td style="text-align:left">_CapWords</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Exceptions</td>
+<td style="text-align:left">CapWords</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Functions</td>
+<td style="text-align:left">lower_with_under()</td>
+<td style="text-align:left">_lower_with_under()</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Global/Class Constants</td>
+<td style="text-align:left">CAPS_WITH_UNDER</td>
+<td style="text-align:left">_CAPS_WITH_UNDER</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Global/Class Variables</td>
+<td style="text-align:left">lower_with_under</td>
+<td style="text-align:left">_lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Instance Variables</td>
+<td style="text-align:left">lower_with_under</td>
+<td style="text-align:left">_lower_with_under (protected) or __lower_with_under (private)</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Method Names</td>
+<td style="text-align:left">lower_with_under()</td>
+<td style="text-align:left">_lower_with_under() (protected) or    __lower_with_under() (private)</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Function/Method Parameters</td>
+<td style="text-align:left">lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">Local Variables</td>
+<td style="text-align:left">lower_with_under</td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h5><span id="main">Main</span></h5><blockquote>
+<p>即使是一个打算被用作脚本的文件, 也应该是可导入的. 并且简单的导入不应该导致这个脚本的主功能(<code>main functionality</code>)被执行, 这是一种副作用. 主功能应该放在一个<code>main()</code>函数中.</p>
+</blockquote>
+<p>在<code>Python</code>中, <code>pydoc</code>以及单元测试要求模块必须是可导入的. 你的代码应该在执行主程序前总是检查 <code>if __name__ == &#39;__main__&#39;</code> , 这样当模块被导入时主程序就不会被执行.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>所有的顶级代码在模块导入时都会被执行. 要小心不要去调用函数, 创建对象, 或者执行那些不应该在使用<code>pydoc</code>时执行的操作.</p>
+<h4><span id="2-python-文档注释规范">2. Python 文档注释规范</span></h4><h4><span id="3-python-for-odoo-项目规范">3. Python for odoo 项目规范</span></h4><h4><span id="4-参考">4. 参考</span></h4><blockquote>
+<ul>
+<li><a href="https://google.github.io/styleguide/pyguide.html" target="_blank" rel="noopener">Google Python Style Guide</a></li>
+<li><a href="http://wiki.jikexueyuan.com/project/google-python-style-guide/python-style-rules.html]" target="_blank" rel="noopener">Google Python编码规范 (中译)</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2017/03/31/python-coding-style/" title="Python Coding Style">http://xiao-fang.cc/2017/03/31/python-coding-style/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/others/" rel="tag"># others</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/04/poem-spring/" rel="next" title="春之樱">
+                <i class="fa fa-chevron-left"></i> 春之樱
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/31/deep-dive-into-odoo-security/" rel="prev" title="Deep Dive Into Odoo Security">
+                Deep Dive Into Odoo Security <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">1.  Python 代码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">分号( ; )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">行长度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">换行 / 行间连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.4.</span> <span class="nav-text">括号</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.5.</span> <span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.6.</span> <span class="nav-text">空行</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.7.</span> <span class="nav-text">空格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.8.</span> <span class="nav-text">Shebang</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.9.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.10.</span> <span class="nav-text">类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.11.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.12.</span> <span class="nav-text">文件和sockets</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.13.</span> <span class="nav-text">TODO注释</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.14.</span> <span class="nav-text">导入 ( import ) 格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.15.</span> <span class="nav-text">语句</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.16.</span> <span class="nav-text">访问控制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.17.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">1.18.</span> <span class="nav-text">Main</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">2. Python 文档注释规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">3. Python for odoo 项目规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">4. 参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:36</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2017/03/31/python-coding-style/';
+          this.page.identifier = '2017/03/31/python-coding-style/';
+          this.page.title = 'Python Coding Style';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

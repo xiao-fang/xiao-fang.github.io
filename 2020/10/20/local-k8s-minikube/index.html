@@ -1,0 +1,1152 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CentOS,Kubernetes,minikube,Kubectl,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Kubernetes (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from CNCF.  All cloud service providers like AWS, Az">
+<meta name="keywords" content="CentOS,Kubernetes,minikube,Kubectl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Quick Start A Local-Hosted K8S Environment">
+<meta property="og:url" content="http://xiao-fang.cc/2020/10/20/local-k8s-minikube/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="Kubernetes (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from CNCF.  All cloud service providers like AWS, Az">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://raw.githubusercontent.com/kubernetes/kubernetes/587d164307de060d271f10f2386f39153360fba9/docs/design/architecture.svg">
+<meta property="og:image" content="https://d33wubrfki0l68.cloudfront.net/349824f68836152722dab89465835e604719caea/6e0b7/images/docs/ui-dashboard.png">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Quick Start A Local-Hosted K8S Environment">
+<meta name="twitter:description" content="Kubernetes (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from CNCF.  All cloud service providers like AWS, Az">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/kubernetes/kubernetes/587d164307de060d271f10f2386f39153360fba9/docs/design/architecture.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2020/10/20/local-k8s-minikube/">
+
+
+
+
+
+  <title> Quick Start A Local-Hosted K8S Environment | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2020/10/20/local-k8s-minikube/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Quick Start A Local-Hosted K8S Environment
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-10-20T00:00:00+00:00">
+                2020-10-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/10/20/local-k8s-minikube/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/10/20/local-k8s-minikube/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/10/20/local-k8s-minikube/" class="leancloud_visitors" data-flag-title="Quick Start A Local-Hosted K8S Environment">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <!-- Quick Start A Local-Hosted K8S Environment -->
+<p><em>Kubernetes</em> (K8S) is an open-source system for automating deployment, scaling, and management of containerized applications, which is now graduated from <a href="https://www.cncf.io/" target="_blank" rel="noopener">CNCF</a>. </p>
+<p>All cloud service providers like AWS, Azure, Aliyun, Tecent Cloud are now providing cloud-based and easy-to-use K8S infrastructure.</p>
+<p>Here uses <a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikue</a> to quick start a new local K8S environment for development.</p>
+<p><img src="https://raw.githubusercontent.com/kubernetes/kubernetes/587d164307de060d271f10f2386f39153360fba9/docs/design/architecture.svg" alt="K8S Architecture"></p>
+<h2><span id="requirements">Requirements</span></h2><p><code>Minikube</code> supports container or virtual machine manager, such as <a href="https://minikube.sigs.k8s.io/docs/start/#what-youll-need" target="_blank" rel="noopener">Docker, Hyperkit, Hyper-V, KVM, Parallels, Podman, VirtualBox, or VMWare</a>. </p>
+<p>I start from CentOS 7 VM (<em>2+ cpu, 4GB memory, 20+GB disk</em>).</p>
+<ul>
+<li><p>Install <code>Docker</code> </p>
+<ul>
+<li>refer to <a href="https://docs.docker.com/engine/install/centos/" target="_blank" rel="noopener">Install Docker Engine on CentOS</a></li>
+</ul>
+</li>
+<li><p>Install Kubectl</p>
+<ul>
+<li>refer to <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener">Install and Set Up kubectl</a></li>
+</ul>
+</li>
+<li><p>Install minikube</p>
+<ul>
+<li>refer to <a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a></li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h2><span id="start-a-new-cluster">Start a new cluster</span></h2><p>From a terminal with administrator access (but not logged in as root), run <code>minikube start</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ minikube start</span><br><span class="line">* minikube v1.14.0 on Centos 7.8.2003</span><br><span class="line">* Automatically selected the docker driver</span><br><span class="line">* Starting control plane node minikube <span class="keyword">in</span> cluster minikube</span><br><span class="line">* Creating docker container (CPUs=2, Memory=2200MB) ...</span><br><span class="line">* Preparing Kubernetes v1.19.2 on Docker 19.03.8 ...</span><br><span class="line">* Verifying Kubernetes components...</span><br><span class="line">* Enabled addons: default-storageclass, storage-provisioner</span><br><span class="line">* Done! kubectl is now configured to use <span class="string">"minikube"</span> by default</span><br></pre></td></tr></table></figure>
+<p>if run as <code>root</code>, will throw following error:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># minikube start</span></span><br><span class="line">* minikube v1.14.0 on Centos 7.8.2003</span><br><span class="line">* Automatically selected the docker driver</span><br><span class="line">* The <span class="string">"docker"</span> driver should not be used with root privileges.</span><br><span class="line">* If you are running minikube within a VM, consider using --driver=none:</span><br><span class="line">*   https://minikube.sigs.k8s.io/docs/reference/drivers/none/</span><br><span class="line"></span><br><span class="line">X Exiting due to DRV_AS_ROOT: The <span class="string">"docker"</span> driver should not be used with root privileges.</span><br></pre></td></tr></table></figure>
+<p>After <code>minikube start</code>, let’s check <code>minikube status</code>:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ minikube status</span><br><span class="line">minikube</span><br><span class="line"><span class="built_in">type</span>: Control Plane</span><br><span class="line">host: Running</span><br><span class="line">kubelet: Running</span><br><span class="line">apiserver: Running</span><br><span class="line">kubeconfig: Configured</span><br></pre></td></tr></table></figure></p>
+<p>What happens behind? <code>minikube start</code>s a new docker container named <em>minikube</em> from image <code>gcr.io/k8s-minikube/kicbase:v0.0.13</code>. the <em>minikube</em> container is the only one <code>node</code> of current K8S cluster. </p>
+<p>Deep dive into the <code>minikube</code> container, actually it’s also a docker environment runs a minimal set components (as containers/<code>pods</code>) of k8s cluster <strong>inside</strong>, like <em>controller manager, scheduler, etcd, apiserver, proxy, coredns, storage provisioner, metric scraper, dashboard, etc</em> (refer to above <em>K8S Architecture</em>).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># following scripts to see k8s inside, not neccessary steps to start a k8s cluster</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># minikube start a new container named minikube</span></span><br><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                 COMMAND                  CREATED             STATUS              PORTS                                                                                                      NAMES</span><br><span class="line">22353255b3d8        gcr.io/k8s-minikube/kicbase:v0.0.13   <span class="string">"/usr/local/bin/entr…"</span>   5 minutes ago       Up 5 minutes        127.0.0.1:32779-&gt;22/tcp, 127.0.0.1:32778-&gt;2376/tcp, 127.0.0.1:32777-&gt;5000/tcp, 127.0.0.1:32776-&gt;8443/tcp   minikube</span><br><span class="line"></span><br><span class="line"><span class="comment"># the minikube is the only one node of current K8S cluster</span></span><br><span class="line">$ kubectl get no -A</span><br><span class="line">NAME       STATUS   ROLES    AGE     VERSION</span><br><span class="line">minikube   Ready    master   6m18s   v1.19.2</span><br><span class="line"></span><br><span class="line"><span class="comment"># dive into the minikube container, actually there are a minimal components of k8s cluster, like,</span></span><br><span class="line"><span class="comment"># controller manager, scheduler, etcd, apiserver, proxy, coredns, storage provisioner, metric scraper, dashboard, etc.</span></span><br><span class="line">$ docker <span class="built_in">exec</span> -it minikube bash</span><br><span class="line"><span class="comment"># above equal to command 'minikube ssh' to login the minikube environment as docker user</span></span><br><span class="line">root@minikube:$ docker ps --format <span class="string">"table &#123;&#123;.ID&#125;&#125;\t&#123;&#123;.Image&#125;&#125;\t&#123;&#123;.Names&#125;&#125;"</span></span><br><span class="line">CONTAINER ID        IMAGE                  NAMES</span><br><span class="line">2c96ab880751        bad58561c4be           k8s_storage-provisioner_storage-provisioner_kube-system_f6123384-ac90-49cd-93e2-f99d9e243542_0</span><br><span class="line">c42638327a87        k8s.gcr.io/pause:3.2   k8s_POD_storage-provisioner_kube-system_f6123384-ac90-49cd-93e2-f99d9e243542_0</span><br><span class="line">d31089f8f566        bfe3a36ebd25           k8s_coredns_coredns-f9fd979d6-g8vjq_kube-system_cfe2bef7-f7a1-4aa4-9c93-1383d69c4293_0</span><br><span class="line">26f42373a94b        d373dd5a8593           k8s_kube-proxy_kube-proxy-rsw7l_kube-system_8ea9d442-8d6d-4c00-b272-df32d0fc3e5d_0</span><br><span class="line">7b94b2d4e6e5        k8s.gcr.io/pause:3.2   k8s_POD_coredns-f9fd979d6-g8vjq_kube-system_cfe2bef7-f7a1-4aa4-9c93-1383d69c4293_0</span><br><span class="line">dbabb0c1f811        k8s.gcr.io/pause:3.2   k8s_POD_kube-proxy-rsw7l_kube-system_8ea9d442-8d6d-4c00-b272-df32d0fc3e5d_0</span><br><span class="line">f6f333c19a28        607331163122           k8s_kube-apiserver_kube-apiserver-minikube_kube-system_f7c3d51df5e2ce4e433b64661ac4503c_0</span><br><span class="line">a0a8ee250949        0369cf4303ff           k8s_etcd_etcd-minikube_kube-system_d186e6390814d4dd7e770f47c08e98a2_0</span><br><span class="line">4940ac2f1f0c        2f32d66b884f           k8s_kube-scheduler_kube-scheduler-minikube_kube-system_ff7d12f9e4f14e202a85a7c5534a3129_0</span><br><span class="line">9815051dbc4b        8603821e1a7a           k8s_kube-controller-manager_kube-controller-manager-minikube_kube-system_dcc127c185c80a61d90d8e659e768641_0</span><br><span class="line">59b8793a0a3e        k8s.gcr.io/pause:3.2   k8s_POD_kube-apiserver-minikube_kube-system_f7c3d51df5e2ce4e433b64661ac4503c_0</span><br><span class="line">c0becce7b87d        k8s.gcr.io/pause:3.2   k8s_POD_etcd-minikube_kube-system_d186e6390814d4dd7e770f47c08e98a2_0</span><br><span class="line">49f74073f3f3        k8s.gcr.io/pause:3.2   k8s_POD_kube-scheduler-minikube_kube-system_ff7d12f9e4f14e202a85a7c5534a3129_0</span><br><span class="line">eaad3ec1c277        k8s.gcr.io/pause:3.2   k8s_POD_kube-controller-manager-minikube_kube-system_dcc127c185c80a61d90d8e659e768641_0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>So we can have a quick view that <em>minikube</em> created a docker container with all neccessary k8s compoments inside, the container plays as the single <em>node</em> of k8s <em>cluster</em>.</p>
+</blockquote>
+<h2><span id="k8s-dashboard-and-proxy">K8S Dashboard and Proxy</span></h2><p><em>minikube</em> bundles the K8S <a href="https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/" target="_blank" rel="noopener">Dashboard</a>, a Web UI allows us to get easily management to the K8S enviroment:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># start a dashboard at backend</span></span><br><span class="line"><span class="comment"># it will try to open default brower</span></span><br><span class="line">minikube dashboard</span><br><span class="line">$ minikube dashboard &amp;</span><br><span class="line">* Enabling dashboard ...</span><br><span class="line">* Verifying dashboard health ...</span><br><span class="line">* Launching proxy ...</span><br><span class="line">* Verifying proxy health ...</span><br><span class="line">* Opening http://127.0.0.1:44278/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/ <span class="keyword">in</span> your default browser...</span><br><span class="line">  - http://127.0.0.1:44278/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/</span><br><span class="line"></span><br><span class="line"><span class="comment"># optional to forward it to vm host with default 8081 port, or '--port=xxxx' to specify another port</span></span><br><span class="line">$ kubectl proxy --address=<span class="string">'0.0.0.0'</span> --<span class="built_in">disable</span>-filter=<span class="literal">true</span> &amp;</span><br><span class="line">Request filter disabled, your proxy is vulnerable to XSRF attacks, please be cautious</span><br><span class="line">Starting to serve on [::]:8001</span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) or start dashboard and proxy at backend at the same time</span></span><br><span class="line">minikube dashboard &amp; kubectl proxy --address=<span class="string">'0.0.0.0'</span> --<span class="built_in">disable</span>-filter=<span class="literal">true</span> &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) how to stop a `backgroud` kubectl proxy?</span></span><br><span class="line"><span class="comment"># grep from netstat</span></span><br><span class="line">$ netstat -tulp | grep kubectl</span><br><span class="line">tcp6       0      0 [::]:vcom-tunnel        [::]:*                  LISTEN      13655/kubectl</span><br><span class="line"><span class="comment"># then kill the process by &lt;pid&gt;</span></span><br><span class="line">sudo <span class="built_in">kill</span> -9 &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://d33wubrfki0l68.cloudfront.net/349824f68836152722dab89465835e604719caea/6e0b7/images/docs/ui-dashboard.png" alt="K8S Dashboard"></p>
+<p>visit dashboard via: <code>http://{localhost-or-forwarded-host}:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/workloads?namespace=_all</code></p>
+<h2><span id="deploy-applications">Deploy Applications</span></h2><p>K8S manages <em>containered</em> applications, based on images from public registries like <a href="https://hub.docker.com/" target="_blank" rel="noopener">DockerHub</a> and also private regitries.</p>
+<p>Here is our private registry, plain HTTP without SSL, for internal use only.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># our private registry, for internal use only</span></span><br><span class="line">registry: chszctnr02:8082</span><br><span class="line">user: dockeradmin</span><br><span class="line">pass: 123456</span><br></pre></td></tr></table></figure></p>
+<h3><span id="use-privacy-registry">Use Privacy Registry</span></h3><p>As we see that minikube starts a node in container, we can use <code>kubectl</code> to manage credential to registry as <code>secret</code>.</p>
+<p>If the registry is a insecure registry (HTTP, not HTTPS), minikube can start with <code>--insecure-registry</code> option to pass into k8s nodes, e.g.<br><code>minikube start --insecure-registry=chszctnr02:8082</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create namespace, e.g. cecs</span></span><br><span class="line">$ kubectl create namespace cecs</span><br><span class="line">namespace/cecs created</span><br><span class="line"></span><br><span class="line"><span class="comment"># create secret for private registry</span></span><br><span class="line">$ kubectl create secret docker-registry chszctnr02-registry --docker-server=chszctnr02:8082 --docker-username=dockeradmin --docker-password=123456 --namespace cecs</span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) configure minikube</span></span><br><span class="line">$ minikube config <span class="built_in">set</span> insecure-registry chszctnr02:8082</span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) view minikube config</span></span><br><span class="line">$ minikube config view</span><br><span class="line">- insecure-registry: chszctnr02:8082</span><br><span class="line"></span><br><span class="line"><span class="comment"># then try to start minikube with --insecure-registry option</span></span><br><span class="line">$ minikube start --insecure-registry=chszctnr02:8082</span><br><span class="line"></span><br><span class="line"><span class="comment"># if above minikube start with --insecure-registry does not work</span></span><br><span class="line"><span class="comment"># do `minikube delete` first and try again</span></span><br></pre></td></tr></table></figure>
+<p>Then we can create k8s <code>workload</code> with <code>yaml</code> spec,<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment">#...</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">container:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">some-app</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">'chszctnr02:8082/somenamespace/someapp:tag'</span>  <span class="comment"># image for private registry</span></span><br><span class="line">      <span class="attr">imagePullSecrets:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">chszctnr02-registry</span>                           <span class="comment"># private registry secret name</span></span><br><span class="line">  <span class="comment">#...</span></span><br></pre></td></tr></table></figure></p>
+<p>(Optional) If  use private registry from AWS, Azure, DockerHub, <code>minikube</code> offers the <code>registry-creds</code> addon to easily haddle the credentials. Please refer to <a href="https://minikube.sigs.k8s.io/docs/handbook/registry/" target="_blank" rel="noopener">minikube: Using a Private Registry</a>.</p>
+<p>(Optional) If we use <code>docker</code> directly without <code>kubectl</code>, following steps to use an insecure registry.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># (optional) login to private registry</span></span><br><span class="line"><span class="comment"># it will store credential in ~/.docker/config.json</span></span><br><span class="line">$ docker login chszctnr02:8082</span><br><span class="line">Username: dockeradmin</span><br><span class="line">Password: </span><br><span class="line">WARNING! Your password will be stored unencrypted <span class="keyword">in</span> /home/edworks/.docker/config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line">https://docs.docker.com/engine/reference/commandline/login/<span class="comment">#credentials-store</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) trust insecure-registries, and restart docker ()</span></span><br><span class="line">$ vi /etc/docker/daemon.json </span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"insecure-registries"</span> : [<span class="string">"chszctnr02:8082"</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># restart docker to take effects</span></span><br><span class="line">$ systemctl restart docker</span><br></pre></td></tr></table></figure>
+<h3><span id="deployment">Deployment</span></h3><p>Now it’s a k8s environment ready to deploy applications on your own ~</p>
+<p>Following content are our own project deployments.</p>
+<ul>
+<li>Bundle all config items into one <code>ConfigMap</code> to easily manage configs</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create a configmap holds all config files for specific Environment</span></span><br><span class="line"><span class="comment"># (optional) set item key (e.g. app-settings) to specific config file, otherwise the item key should be the same with file name(e.g. appsettings.Development.json)</span></span><br><span class="line">$ kubectl create configmap is-sts-conf-dev \ </span><br><span class="line">--from-file app-settings=./appsettings.Development.json \ </span><br><span class="line">--from-file portal-settings=./portal.Development.json \ </span><br><span class="line">--from-file serilog-settings=serilog.Development.json \ </span><br><span class="line">--namespace cecs</span><br><span class="line"><span class="comment"># configmap/is-sts-conf-dev created</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/configmap/#using-configmaps-as-files-from-a-pod" target="_blank" rel="noopener">Using ConfigMaps as files from a pod</a></li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#create a deployment (partial, the volumes and mounts)</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-conf-volume</span>                       <span class="comment"># mount ConfigMap in a volume</span></span><br><span class="line">          <span class="attr">configMap:</span></span><br><span class="line">            <span class="attr">name:</span> <span class="string">is-sts-conf-files-prod</span></span><br><span class="line">            <span class="attr">defaultMode:</span> <span class="number">420</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">dev-nop</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">'chszctnr02:8082/some-namespace/is-sts:0.dev.0.201019.ed1730bb'</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ASPNETCORE_ENVIRONMENT</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">Development</span></span><br><span class="line">          <span class="attr">resources:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">          <span class="attr">volumeMounts:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-conf-volume</span></span><br><span class="line">              <span class="attr">mountPath:</span> <span class="string">/app/portal.json</span>             <span class="comment"># target file in container</span></span><br><span class="line">              <span class="attr">subPath:</span> <span class="string">portal.Development.json</span>        <span class="comment"># source item in ConfigMap</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-conf-volume</span></span><br><span class="line">              <span class="attr">mountPath:</span> <span class="string">/app/appsettings.json</span></span><br><span class="line">              <span class="attr">subPath:</span> <span class="string">appsettings.Development.json</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-conf-volume</span></span><br><span class="line">              <span class="attr">mountPath:</span> <span class="string">/app/serilog.json</span></span><br><span class="line">              <span class="attr">subPath:</span> <span class="string">serilog.Development.json</span></span><br></pre></td></tr></table></figure>
+<p>then apply to deveployment, we can see the configmap items will be map to pods/containers, like:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dive into pod:</span></span><br><span class="line"><span class="comment"># config items will be map into pods/container, OVERWRITE if exists</span></span><br><span class="line">root@pod: /app $ ls | grep json</span><br><span class="line">appsettings.json</span><br><span class="line">portal.json</span><br><span class="line">serilog.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># if .spec.containers[].volumeMounts[].subPath is not speficifed, it will map all items to a dir</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Create Secret to store senstive informations such as passwords, tokens, ssk keys.</li>
+</ul>
+<p><code>Secret</code> used with a Pod in three ways: </p>
+<ul>
+<li>a. a file in <code>volume</code> mounted to pods</li>
+<li>b. as container environment variable</li>
+<li>c. by the <code>kubelet</code> when pulling images (see above registry secret)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create secret --from-file or --from-literal</span></span><br><span class="line">kubectl create secret generic localhost-cert \ </span><br><span class="line">--from-file cert-file=./localhost.pfx \ </span><br><span class="line">--from-literal cert-pass=somepass \ </span><br><span class="line">--namespace cecs</span><br><span class="line"></span><br><span class="line"><span class="comment">#secret/localhost-cert created, type is Opaque</span></span><br><span class="line">$ kubectl get secrets -n cecs | grep cert</span><br><span class="line">localhost-cert        Opaque    2     11m</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cert-volume</span>                 <span class="comment"># secret as a volume</span></span><br><span class="line">          <span class="attr">secret:</span></span><br><span class="line">            <span class="attr">secretName:</span> <span class="string">localhost-cert</span>      <span class="comment"># the secret name</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">is-sts</span></span><br><span class="line">          <span class="attr">image:</span> <span class="string">'chszctnr02:8082/some-namespace/is-sts:1.0.8.200929.3226b1e1'</span></span><br><span class="line">          <span class="attr">env:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">ASPNETCORE_ENVIRONMENT</span></span><br><span class="line">              <span class="attr">value:</span> <span class="string">Development</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">CertificateConfiguration__PfxFilePassword</span></span><br><span class="line">              <span class="attr">valueFrom:</span>                    <span class="comment"># usage#b, value from secret item as a env variable</span></span><br><span class="line">                <span class="attr">secretKeyRef:</span></span><br><span class="line">                    <span class="attr">key:</span> <span class="string">cert-pass</span>          <span class="comment"># the key to secret</span></span><br><span class="line">                    <span class="attr">name:</span> <span class="string">localhost-cert</span>    <span class="comment"># the secret name</span></span><br><span class="line">                    <span class="attr">optional:</span> <span class="literal">false</span></span><br><span class="line">          <span class="attr">resources:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">          <span class="attr">volumeMounts:</span></span><br><span class="line">            <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">cert-volume</span>             <span class="comment"># usage#a, mount secret as files</span></span><br><span class="line">              <span class="attr">mountPath:</span> <span class="string">/app/cert</span>          <span class="comment"># all items in secret will be map to files under this dir, here, /app/cert/cert-file, /app/cert-pass.</span></span><br></pre></td></tr></table></figure>
+<p>then apply to deveployment, we can see the secret will be map to pods/containers, like:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dive into pod:</span></span><br><span class="line"><span class="comment"># usage#b, the raw secret item was set to env variable</span></span><br><span class="line">/app<span class="comment"># env | grep Pfx</span></span><br><span class="line">CertificateConfiguration__PfxFilePassword=somepass</span><br><span class="line"></span><br><span class="line"><span class="comment"># usage#a, the secret items were map to files.</span></span><br><span class="line">/app<span class="comment"># ls ./cert</span></span><br><span class="line">cert-file  cert-pass</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Create a Service to expose as network service</li>
+</ul>
+<p><code>Service</code> is an abstract way to expose an application runing on a set of Pods as a network service, more about service please refer to <a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">Kubernetes Serviece</a>.</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># expose pod 80 port to service 80 port</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">is-sts-service</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">cecs</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">  <span class="attr">app:</span> <span class="string">MyApp</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="number">80</span><span class="number">-80</span><span class="string">-tcp</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">80</span>              <span class="comment"># incoming port</span></span><br><span class="line">    <span class="attr">protocol:</span> <span class="string">TCP</span></span><br><span class="line">    <span class="attr">targetPort:</span> <span class="number">80</span>        <span class="comment"># expose port</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br></pre></td></tr></table></figure>
+<p>then apply, we can see we can see a <code>service</code> is created.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># a service is created</span></span><br><span class="line">$ kubectl get svc -n cecs</span><br><span class="line">NAMESPACE    NAME               TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)              AGE</span><br><span class="line">cecs         is-sts-service     NodePort    10.104.125.235   &lt;none&gt;        80:30971/TCP         2m30s</span><br></pre></td></tr></table></figure>
+<p>Usually, for deployement, we can use <code>kubectl port-forward</code> to expose deployment directly without service.</p>
+<ul>
+<li>Port forwarding to access applications in a K8S cluster</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># forward deployment 80 to expose 8080</span></span><br><span class="line">$ kubectl -n cecs --address 0.0.0.0 port-forward deployment/is-sts 8080:80</span><br><span class="line"><span class="comment"># port is forwarding</span></span><br><span class="line">Forwarding from 127.0.0.1:8080 -&gt; 80</span><br><span class="line">Forwarding from [::1]:8080 -&gt; 80</span><br><span class="line"><span class="comment"># handle requests</span></span><br><span class="line">Handling connection <span class="keyword">for</span> 8080</span><br><span class="line"></span><br><span class="line"><span class="comment"># (optional) open firewall port</span></span><br><span class="line">$ firewall-cmd --add-port=8080/tcp --permanent</span><br><span class="line">$ firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<h3><span id="minikube-addons">minikube addons</span></h3><p><code>minikube</code> has a built-in list of applications and services that may be easily deployed, such as Istio or Ingress. To list the available addons for your version of <code>minikube</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">$ minikube addons list</span><br><span class="line">|-----------------------------|----------|--------------|</span><br><span class="line">|         ADDON NAME          | PROFILE  |    STATUS    |</span><br><span class="line">|-----------------------------|----------|--------------|</span><br><span class="line">| ambassador                  | minikube | disabled     |</span><br><span class="line">| csi-hostpath-driver         | minikube | disabled     |</span><br><span class="line">| dashboard                   | minikube | enabled ✅   |</span><br><span class="line">| default-storageclass        | minikube | enabled ✅   |</span><br><span class="line">| efk                         | minikube | disabled     |</span><br><span class="line">| freshpod                    | minikube | disabled     |</span><br><span class="line">| gcp-auth                    | minikube | disabled     |</span><br><span class="line">| gvisor                      | minikube | disabled     |</span><br><span class="line">| helm-tiller                 | minikube | disabled     |</span><br><span class="line">| ingress                     | minikube | enabled ✅   |</span><br><span class="line">| ingress-dns                 | minikube | disabled     |</span><br><span class="line">| istio                       | minikube | disabled     |</span><br><span class="line">| istio-provisioner           | minikube | disabled     |</span><br><span class="line">| kubevirt                    | minikube | disabled     |</span><br><span class="line">| logviewer                   | minikube | disabled     |</span><br><span class="line">| metallb                     | minikube | disabled     |</span><br><span class="line">| metrics-server              | minikube | disabled     |</span><br><span class="line">| nvidia-driver-installer     | minikube | disabled     |</span><br><span class="line">| nvidia-gpu-device-plugin    | minikube | disabled     |</span><br><span class="line">| olm                         | minikube | disabled     |</span><br><span class="line">| pod-security-policy         | minikube | disabled     |</span><br><span class="line">| registry                    | minikube | disabled     |</span><br><span class="line">| registry-aliases            | minikube | disabled     |</span><br><span class="line">| registry-creds              | minikube | disabled     |</span><br><span class="line">| storage-provisioner         | minikube | enabled ✅   |</span><br><span class="line">| storage-provisioner-gluster | minikube | disabled     |</span><br><span class="line">| volumesnapshots             | minikube | disabled     |</span><br><span class="line">|-----------------------------|----------|--------------|</span><br><span class="line"></span><br><span class="line"><span class="comment"># to enable an add-on:</span></span><br><span class="line">$ minikube addons <span class="built_in">enable</span> &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># to enable an addon at start-up, where –addons option can be specified multiple times:</span></span><br><span class="line">$ minikube start --addons &lt;name1&gt; --addons &lt;name2&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># for addons that expose a browser endpoint, you can quickly open them with:</span></span><br><span class="line">$ minikube addons open &lt;name&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># to disable an addon:</span></span><br><span class="line">$ minikube addons <span class="built_in">disable</span> &lt;name&gt;</span><br></pre></td></tr></table></figure>
+<h2><span id="reference">Reference</span></h2><ul>
+<li><a href="https://docs.docker.com/engine/install/centos/" target="_blank" rel="noopener">Install Docker Engine on CentOS</a></li>
+<li><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/" target="_blank" rel="noopener">Install and Set Up kubectl</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/start/" target="_blank" rel="noopener">minikube start</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/drivers/" target="_blank" rel="noopener">minikube Drivers</a></li>
+<li><a href="https://minikube.sigs.k8s.io/docs/handbook/registry/" target="_blank" rel="noopener">Using a Private Registry / Enabling Insecure Registries</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/configmap/#using-configmaps-as-files-from-a-pod" target="_blank" rel="noopener">Using ConfigMaps as files from a Pod</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/configuration/secret/" target="_blank" rel="noopener">Kubernetes Secrets</a></li>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/service/" target="_blank" rel="noopener">Kubernetes Serviece</a></li>
+<li><a href="https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands" target="_blank" rel="noopener">Kubectl Commands Reference</a></li>
+<li><a href="https://phoenixnap.com/kb/understanding-kubernetes-architecture-diagrams" target="_blank" rel="noopener">Understanding Kubernetes Architecture With Diagrams</a></li>
+<li><a href="https://www.thegeekdiary.com/how-to-open-a-ports-in-centos-rhel-7/#:~:text=How%20To%20Open%20A%20Port%20In%20CentOS%20%2F,firewall%20ports%205.%20Check%20newly%20added%20port%20status" target="_blank" rel="noopener">How To Open A Port In CentOS / RHEL 7</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2020/10/20/local-k8s-minikube/" title="Quick Start A Local-Hosted K8S Environment">http://xiao-fang.cc/2020/10/20/local-k8s-minikube/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+            <a href="/tags/minikube/" rel="tag"># minikube</a>
+          
+            <a href="/tags/Kubectl/" rel="tag"># Kubectl</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/04/poem-yuanxi-xinyu/" rel="next" title="元夕新雨">
+                <i class="fa fa-chevron-left"></i> 元夕新雨
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Requirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">Start a new cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">K8S Dashboard and Proxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">Deploy Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.1.</span> <span class="nav-text">Use Privacy Registry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.2.</span> <span class="nav-text">Deployment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.3.</span> <span class="nav-text">minikube addons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:35</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2020/10/20/local-k8s-minikube/';
+          this.page.identifier = '2020/10/20/local-k8s-minikube/';
+          this.page.title = 'Quick Start A Local-Hosted K8S Environment';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

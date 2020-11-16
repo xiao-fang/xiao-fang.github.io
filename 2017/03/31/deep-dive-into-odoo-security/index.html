@@ -1,0 +1,1212 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="odoo,python,others,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Deep Dive Into Odoo Security# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com  演示数据准备Demo Users ( res_users )  demo_customer demo_sales demo_manager    创建 res_users, 如果不显示指定 partner_id,">
+<meta name="keywords" content="odoo,python,others">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Dive Into Odoo Security">
+<meta property="og:url" content="http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="Deep Dive Into Odoo Security# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com  演示数据准备Demo Users ( res_users )  demo_customer demo_sales demo_manager    创建 res_users, 如果不显示指定 partner_id,">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://xiao-fang.cc/uploads/oddo-security-01.png">
+<meta property="og:image" content="http://xiao-fang.cc/uploads/odoo-security-02.png">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Dive Into Odoo Security">
+<meta name="twitter:description" content="Deep Dive Into Odoo Security# Deep Dive Into Odoo Security © Edward | xiao.fang@outlook.com  演示数据准备Demo Users ( res_users )  demo_customer demo_sales demo_manager    创建 res_users, 如果不显示指定 partner_id,">
+<meta name="twitter:image" content="http://xiao-fang.cc/uploads/oddo-security-01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/">
+
+
+
+
+
+  <title> Deep Dive Into Odoo Security | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Deep Dive Into Odoo Security
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-31T00:00:00+00:00">
+                2017-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/Python/" itemprop="url" rel="index">
+                    <span itemprop="name">Python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/31/deep-dive-into-odoo-security/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/31/deep-dive-into-odoo-security/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/31/deep-dive-into-odoo-security/" class="leancloud_visitors" data-flag-title="Deep Dive Into Odoo Security">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4><span id="deep-dive-into-odoo-security">Deep Dive Into Odoo Security</span></h4><pre><code># Deep Dive Into Odoo Security
+© Edward | xiao.fang@outlook.com
+</code></pre><hr>
+<h4><span id="演示数据准备">演示数据准备</span></h4><h5><span id="demo-users-res_users">Demo Users ( <code>res_users</code> )</span></h5><blockquote>
+<ul>
+<li><code>demo_customer</code></li>
+<li><code>demo_sales</code></li>
+<li><code>demo_manager</code></li>
+</ul>
+</blockquote>
+<ul>
+<li>创建 <code>res_users</code>, 如果不显示指定 <code>partner_id</code>,  则系统默认创建一条<code>res_partner</code>记录. </li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">res_users</span><span class="params">(osv.osv)</span>:</span></span><br><span class="line">    <span class="string">""" User class. A res.users record models an OpenERP user and is different</span></span><br><span class="line"><span class="string">        from an employee.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        res.users class now inherits from res.partner. The partner model is</span></span><br><span class="line"><span class="string">        used to store the data related to the partner: lang, name, address,</span></span><br><span class="line"><span class="string">        avatar, ... The user model is now dedicated to technical data.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    _inherits = &#123;</span><br><span class="line">        <span class="string">'res.partner'</span>: <span class="string">'partner_id'</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    _name = <span class="string">"res.users"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h5><span id="demo-groups-res_groups">Demo Groups ( <code>res_groups</code> )</span></h5><blockquote>
+<ul>
+<li><code>demo.group_ciic_customer</code></li>
+<li><code>demo.group_ciic_sales</code></li>
+<li><code>demo.group_ciic_manager</code></li>
+</ul>
+</blockquote>
+<h5><span id="demo-models-amp-views">Demo Models &amp; Views</span></h5><blockquote>
+<ul>
+<li><code>ciic_demo_invoice</code></li>
+<li><code>ciic_demo_lead</code></li>
+<li><code>ciic_demo_quotation</code></li>
+<li><code>ciic_demo_shared</code></li>
+</ul>
+</blockquote>
+<h5><span id="menu-items-ir_ui_menu-ir_ui_menu_group_rel">Menu Items ( <code>ir_ui_menu, ir_ui_menu_group_rel</code> )</span></h5><blockquote>
+<p><code>MenuItem</code> 可以通过 <code>attribute &#39;groups&#39;</code>配置访问权限, 当且仅当<code>MenuItem</code>指向的<code>Action</code>是可以访问的情况下, 该<code>MenuItem</code>才显示. (<code>跟是否有记录/或者能否新增记录没有半毛钱关系</code>) </p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">L0 Menu</th>
+<th style="text-align:left">L1 Menu</th>
+<th style="text-align:left">L2 Menu</th>
+<th style="text-align:left">Full Access Users</th>
+<th style="text-align:left">Full Access Models</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>Demo Module</code></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"><code>Demo Entry</code></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"><code>Customer Entry</code></td>
+<td style="text-align:left"><code>demo.group_ciic_customer</code></td>
+<td style="text-align:left"><code>ciic_demo_lead</code></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"><code>Sales Entry</code></td>
+<td style="text-align:left"><code>demo.group_ciic_sales</code></td>
+<td style="text-align:left"><code>ciic_demo_quotation</code></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"><code>Manager Entry</code></td>
+<td style="text-align:left"><code>demo.group_ciic_manager</code></td>
+<td style="text-align:left"><code>ciic_demo_invoice</code></td>
+</tr>
+<tr>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"><code>Shared Entry</code></td>
+<td style="text-align:left"><code>*</code></td>
+<td style="text-align:left"><code>*</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4><span id="odoo-权限机制"><code>odoo</code> 权限机制</span></h4><blockquote>
+<p><code>odoo</code>的权限控制 (<code>Managed By</code>) 有以下几个因素.</p>
+<ul>
+<li>组 <code>Groups</code> </li>
+<li>访问控制 <code>Access Control</code></li>
+<li>字段访问控制 <code>Field Access</code></li>
+<li>记录规则 <code>Record Rules</code></li>
+<li>工作流事务规则 <code>Workflow Transaction Rules</code></li>
+</ul>
+</blockquote>
+<h5><span id="groups">Groups</span></h5><blockquote>
+<p><code>res_users</code>和<code>res_groups</code>的关联关系: <code>res_groups_users_rel</code></p>
+<ul>
+<li>一个 <code>user</code> 可以属于 任意个 <code>group</code>  ( <em>A user can belongs to any number of groups</em> )</li>
+<li><code>user</code> 拥有所在<code>group</code>的所有权限 ( <em>A user has access to all permissions granted to any of its groups</em> )</li>
+</ul>
+</blockquote>
+<h5><span id="access-control-list-acl">Access Control List (<code>ACL</code>)</span></h5><blockquote>
+<p>数据库相关表: <code>ir_model_access, ir_model, res_groups</code></p>
+<ul>
+<li><code>ACL</code>的目标对象是 <code>model</code>, 即<code>ORM</code>映射的数据库表.</li>
+<li><code>ACL</code>可以配置 <code>create, read, wirte(edit/update), delete(unlink)</code>权限.</li>
+<li><code>ACL</code> <strong><em>可选</em></strong> 配置 <code>group</code>,<br>○　配置了<code>group</code>, 则当前<code>ACL</code>适用于<code>group</code>所有成员<code>user</code>.<br>○　未配置<code>group</code>, 则当前<code>ACL</code>适用于所有<code>user</code>.</li>
+<li><code>ACL</code>之间可以累加, 取并集. (<code>additive</code>).</li>
+</ul>
+</blockquote>
+<p>配置ACL, <code>*.csv</code><br><img src="/uploads/oddo-security-01.png" alt="Access Control"></p>
+<p><img src="/uploads/odoo-security-02.png" alt="ACL Config"></p>
+<p>[Practice]</p>
+<ul>
+<li>给Sales添加Lead的Read / Write权限, 看读写, 和Menu变化.</li>
+</ul>
+<h5><span id="field-access">Field Access</span></h5><blockquote>
+<p>数据库相关表: <code>ir_model_fields, ir_model_fields_group_rel</code><br>字段控制的是访问权限, <code>CRWD</code>一键开关.</p>
+<ul>
+<li>通过 <code>attribute &quot;groups&quot;</code> 来控制字段的访问权限, 多个<code>groups</code>之间以<strong>逗号</strong>(<code>,</code>)分隔.</li>
+<li>可以应用到大部分<code>tags</code>, 比如,  <code>&lt;/field&gt;, &lt;/button&gt;, &lt;/groups&gt;,&lt;/page&gt;</code></li>
+<li>model / xml  <code>attribute &quot;groups&quot;</code> 是等价的, 同时在model / xml 中指定了 <code>attribute &quot;groups&quot;</code>, 取 交集 (<code>subtractive</code>) </li>
+</ul>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">field</span> <span class="attr">name</span>=<span class="string">"ex1"</span> <span class="attr">groups</span>=<span class="string">"demo.group_ciic_manager, module.xx_group_xx"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ex1 = fields.Char(<span class="string">'Ex1'</span>, size=<span class="number">64</span>, groups=<span class="string">'demo.group_ciic_customer, module.xx_group_xx'</span>)</span><br></pre></td></tr></table></figure>
+<p>[Practice]</p>
+<ul>
+<li>在Model / XML 上更改 attribute ‘groups’, 看EX1 / EX2 字段的表现.</li>
+</ul>
+<h5><span id="record-rules-rr">Record Rules (<code>RR</code>)</span></h5><blockquote>
+<p><code>RR</code> 构成元素:</p>
+<ul>
+<li><code>Model</code> </li>
+<li><code>create, read, wirte(edit/update), delete(unlink)</code> 分别权限.</li>
+<li><code>domain</code> 过滤条件, 条件满足, 可以访问, 不满足, 不可以访问.</li>
+<li><code>groups</code>, 不指定, 则为全局规则(<code>Global Rules</code>), 指定则为组规则(<code>Groups Rules</code>).</li>
+</ul>
+</blockquote>
+<p>数据库相关表: <code>ir_rule, rule_group_rel</code></p>
+<blockquote>
+<p>全局规则(<code>Global Rules</code>)之间, 取交集 (<code>subtractive</code>), 逻辑与 <code>AND</code>.<br>组规则(<code>Groups Rules</code>) 之间, 取并集 (<code>additive</code>), 逻辑或 <code>OR</code>.</p>
+</blockquote>
+<blockquote>
+<p><code>Example: GLOBAL_RULE_1 AND GLOBAL_RULE_2 AND ( (GROUP_A_RULE_1 OR GROUP_A_RULE_2) OR (GROUP_B_RULE_1 OR GROUP_B_RULE_2) )</code></p>
+</blockquote>
+<blockquote>
+<p><em>Note: This means the first group rule restricts access, but any further group rule expands it, while global rules can only ever restrict access (or have no effect).</em></p>
+</blockquote>
+<h5><span id="access-control-list-vs-record-rules"><code>Access Control List</code> v.s. <code>Record Rules</code></span></h5><blockquote>
+<ul>
+<li><code>ACL</code>可以转换成等价的<code>RR</code>, <code>RR</code>相对于<code>ACL</code>多了Domain Filter的条件过滤.</li>
+<li><code>ACL</code> 的控制对象是<em>Model</em>, 即对应的数据库表, <code>RR</code>的控制对象是Model对应的<em>Records</em>.</li>
+<li>[Question] <code>RR</code>的<code>RWCD</code>没作用?</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/" title="Deep Dive Into Odoo Security">http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/odoo/" rel="tag"># odoo</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/others/" rel="tag"># others</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/31/python-coding-style/" rel="next" title="Python Coding Style">
+                <i class="fa fa-chevron-left"></i> Python Coding Style
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/04/poem-qing-ming/" rel="prev" title="春之茶">
+                春之茶 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Deep Dive Into Odoo Security</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">演示数据准备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">Demo Users ( res_users )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">Demo Groups ( res_groups )</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">2.3.</span> <span class="nav-text">Demo Models &amp; Views</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">2.4.</span> <span class="nav-text">Menu Items ( ir_ui_menu, ir_ui_menu_group_rel )</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">odoo 权限机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">Groups</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">Access Control List (ACL)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.3.</span> <span class="nav-text">Field Access</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.4.</span> <span class="nav-text">Record Rules (RR)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#null"><span class="nav-number">3.5.</span> <span class="nav-text">Access Control List v.s. Record Rules</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:35</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2017/03/31/deep-dive-into-odoo-security/';
+          this.page.identifier = '2017/03/31/deep-dive-into-odoo-security/';
+          this.page.title = 'Deep Dive Into Odoo Security';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

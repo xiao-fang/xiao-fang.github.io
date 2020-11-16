@@ -1,0 +1,1293 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CLR via C#,CLR,Windows,Thread,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="DRAFT VERSION  Thread BasicBackgroundOS only one Thread of execution that ran through the entire system.  includes both OS code/data and application code/data exclusive, prevent other tasks from exec">
+<meta name="keywords" content="CLR via C#,CLR,Windows,Thread">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows Thread">
+<meta property="og:url" content="http://xiao-fang.cc/2017/05/17/windows-thread/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="DRAFT VERSION  Thread BasicBackgroundOS only one Thread of execution that ran through the entire system.  includes both OS code/data and application code/data exclusive, prevent other tasks from exec">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows Thread">
+<meta name="twitter:description" content="DRAFT VERSION  Thread BasicBackgroundOS only one Thread of execution that ran through the entire system.  includes both OS code/data and application code/data exclusive, prevent other tasks from exec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2017/05/17/windows-thread/">
+
+
+
+
+
+  <title> Windows Thread | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2017/05/17/windows-thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Windows Thread
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-17T00:00:00+00:00">
+                2017-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/NET/" itemprop="url" rel="index">
+                    <span itemprop="name">.NET</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/17/windows-thread/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/17/windows-thread/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/17/windows-thread/" class="leancloud_visitors" data-flag-title="Windows Thread">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>DRAFT VERSION</p>
+</blockquote>
+<h2><span id="thread-basic">Thread Basic</span></h2><h3><span id="background">Background</span></h3><p>OS only one <code>Thread</code> of execution that ran through the entire system.</p>
+<ul>
+<li>includes both OS code/data and application code/data</li>
+<li>exclusive, prevent other tasks from executing</li>
+<li>application may cause infinite loop and block entire OS</li>
+</ul>
+<h3><span id="process">Process</span></h3><ul>
+<li>each instance of application is a <code>process</code></li>
+<li><code>process</code> is a collection of resources that’s used by a single instance of application</li>
+<li>virtual address space, isolated domain protection</li>
+<li>depends on and limit to CPU cores</li>
+<li><code>process</code> is expensive in Windows, it may take several seconds to create a process (allocate &amp; initialize memory, load exe/dll for disk, etc.)</li>
+</ul>
+<a id="more"></a>
+<h3><span id="thread">Thread</span></h3><ul>
+<li><p>every <code>Thread</code> has each of following: <code>Thread Kernal Object</code>, <code>Thread Environment Block (TEB)</code>, <code>User-mode Stack</code>, <code>Kernal-mode Stack</code>, <code>DLL thread-attach and thread-detach notifications</code>(unmanaged programming only). =&gt; all these would be allocated when creating a thread =&gt; so a thread itself may take some momery space (at least 1MB+ per thread).</p>
+</li>
+<li><p><code>context switching</code>, CPU has fixed number cores, that threads size may far greater than CPU core number, that CPU allow a thread to run for a <strong><code>time-slice</code></strong>. (<strong>Because CPU core can only do one thine at a time</strong>). Whenever the <code>time-slice</code> for a thread expires, that <code>Windows Context</code> switches to another thread.</p>
+</li>
+<li><code>Thread</code> is the basic dispatcher unit by CPU.</li>
+<li><code>optimum number of threads</code> is the number of CPU cores. (since there’s no context switching, and threads run at full speed)</li>
+<li>don’t <code>abuse</code> thread, <strong>stop the madness!</strong></li>
+<li>don’t <code>block</code> thread, should perform async operations</li>
+</ul>
+<h3><span id="clr-threads-vs-windows-threads">CLR Threads vs Windows Threads</span></h3><ul>
+<li>a CLR thread is identical to a Windows Thread</li>
+</ul>
+<h3><span id="brief">Brief</span></h3><ul>
+<li>进程(<code>Process</code>)是运行程序的实例; 内存空间独立; ( =&gt; 进程通信);</li>
+<li>线程(<code>Thread</code>)是CPU的基本调度单元; 内存空间共享; ( =&gt; 线程同步);</li>
+</ul>
+<h3><span id="two-kind-of-async-operations">Two kind of Async Operations:</span></h3><ul>
+<li><code>Compute-Bound</code>:  requires a thread to do the work</li>
+<li><code>I/O-Bound</code>:  device driver has hardware to do the work; no thread required.</li>
+</ul>
+<h3><span id="thread-schedule-and-priorities">Thread Schedule and Priorities</span></h3><ul>
+<li>Windows is <strong>NOT</strong> a <code>Real-Time Operating System</code></li>
+<li>Every thread is assigned a priority level ranging from <code>0 (the lowest)</code> to <code>31 (the highest)</code></li>
+<li>Higher-priority threads always <code>preempt</code>(抢占) lower-priority threads, regardless of what the lower-priority threads are executing.</li>
+<li>A <code>zero page thread</code> creates on system boot, the lowest priority, when there’s no any other high priority threads need to work, so it’s turn to work, <code>to zeroing any free pages of RAM in system</code>. ( <code>priority 0 is reserved ofor the zero page thread</code>)</li>
+<li>Process Priority and Relative Thread Priority Mapping</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Thread / Process</th>
+<th>Real Time</th>
+<th>High</th>
+<th>Above Normal</th>
+<th>Normal</th>
+<th>Below Normal</th>
+<th>Idle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time Critical</td>
+<td>31</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Highest</td>
+<td>26</td>
+<td>15</td>
+<td>12</td>
+<td>10</td>
+<td>8</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Above Normal</td>
+<td>25</td>
+<td>14</td>
+<td>11</td>
+<td>9</td>
+<td>7</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>24</td>
+<td>13</td>
+<td>10</td>
+<td>8</td>
+<td>6</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Below Normal</td>
+<td>23</td>
+<td>12</td>
+<td>9</td>
+<td>7</td>
+<td>5</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Lowest</td>
+<td>22</td>
+<td>11</td>
+<td>8</td>
+<td>6</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Idle</td>
+<td>16</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3><span id="foregroud-threads-vs-backgroud-threads">Foregroud Threads vs. Backgroud Threads</span></h3><ul>
+<li>CLR consider every thread to be either a foregroud or a backgroud thread.</li>
+<li>When all foreground threads in a process stop running, then CLR force stops any backgroud threads regardless if background threads are still running.</li>
+</ul>
+<h2><span id="compute-bound-async-operations">Compute-Bound Async Operations</span></h2><h3><span id="thread-pool">Thread Pool</span></h3><ul>
+<li>why threads should be improved?<ul>
+<li>creating/destroying a thread is an expensive operation in terms of time</li>
+<li>having a lot of threads wastes memory resource and impact on performance because of context switching between threads.</li>
+</ul>
+</li>
+<li>How <code>ThreadPool</code> works?<ul>
+<li><code>initialize</code> with CLR, <code>one</code> ThreadPool per CLR</li>
+<li>internally, the thread pool maintains a <code>queue</code> of operation requests</li>
+<li>whatever application can <code>append requests</code> in queue by call some ThreadPool method</li>
+<li>requests in thread pool queue would be <code>run</code> in some order by time or priority</li>
+<li>thread pool <code>reuse</code> threads</li>
+<li>thread pool <code>create more threads</code> if there are many requests, otherwise if requests decrese, the thread pool <code>threads kill themselves</code>.</li>
+</ul>
+</li>
+<li><p>Practice</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> Boolean <span class="title">QueueUserWorkItem</span>(<span class="params">WaitCallback callBack</span>)</span>;</span><br><span class="line"><span class="function"><span class="keyword">static</span> Boolean <span class="title">QueueUserWorkItem</span>(<span class="params">WaitCallback callBack, Object state</span>)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Limitations</p>
+<ul>
+<li><code>Thread Pool</code>, that there’s no build-in way for operation completed callback.</li>
+</ul>
+</li>
+</ul>
+<h3><span id="execution-contexts">Execution Contexts</span></h3><ul>
+<li>every thread has an <code>execution context</code> associated to it.</li>
+<li><code>execution context</code> includes such as,<ul>
+<li>security settings (compressed stack, Thread’s Principal property, and Windows identity)</li>
+<li>host settings (see System.Threading.HostExecutionContextManager)</li>
+<li>logical call context data (see System.Runtime.Remoting.Messaging.CallContext’s LogicalSetData and LogicalGetData methods).</li>
+</ul>
+</li>
+<li><p>thread <code>a</code> invokes thread <code>b</code>, then CLR auto cause thread <code>a</code>‘s execctution context to <code>flow (be copied)</code> to thread <code>b</code>. Also, the <code>Executionontext</code> could be <code>suppress/restore</code> programmingly as following. If thread <code>a</code> suppress flow, then thread <code>b</code> cannot access to thread <code>a</code> context.</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> sealed <span class="class"><span class="keyword">class</span> <span class="title">ExecutionContext</span> :</span> IDisposable, ISerializable</span><br><span class="line">&#123;</span><br><span class="line">    [SecurityCritical] <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> AsyncFlowControl <span class="title">SuppressFlow</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">RestoreFlow</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title">IsFlowSuppressed</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="comment">// Less commonly used methods are not shown</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3><span id="cooperative-cancellation-and-timeout">Cooperative Cancellation and Timeout</span></h3><ul>
+<li>.NET fromework offers a standard pattern for canceling operations, is <code>cooperative</code></li>
+<li><p><code>System.Threading.CancellationTokenSource</code>.</p>
+<ul>
+<li><p>the <code>Token</code> is <strong>readonly</strong>, auto-generated on CancellationTokenSource creation.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title">CancellationTokenSource</span> : <span class="title">IDisposable</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CancellationTokenSource</span>(<span class="params"></span>)</span>;</span><br><span class="line">    <span class="keyword">public</span> Boolean IsCancellationRequested &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> CancellationToken Token &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cancel</span>(<span class="params"></span>)</span>; <span class="comment">// Internally, calls Cancel passing false</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Cancel</span>(<span class="params">Boolean throwOnFirstException</span>)</span>;</span><br><span class="line">    <span class="comment">// other members</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>CancellationToken</code> instance is a lightweight value type.</p>
+<ul>
+<li><p>any cancel actions can be <code>Register</code> within token, that can use <code>Dispose</code> to release registered callback from token source.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> CancellationToken</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> CancellationToken None &#123; <span class="keyword">get</span>; &#125; <span class="comment">// Very convenient</span></span><br><span class="line">    <span class="keyword">public</span> Boolean IsCancellationRequested &#123; <span class="keyword">get</span>; &#125; <span class="comment">// Called by non-task invoked operations</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ThrowIfCancellationRequested</span>(<span class="params"></span>)</span>; <span class="comment">// Called by Task-invoked operations</span></span><br><span class="line">    <span class="keyword">public</span> WaitHandle WaitHandle &#123; <span class="keyword">get</span>; &#125; <span class="comment">// WaitHandle is signaled when the CancellationTokenSource is canceled</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CancellationTokenRegistration <span class="title">Register</span>(<span class="params"><span class="comment">/** multiple overloads */</span></span>)</span>;</span><br><span class="line">    <span class="comment">// other members</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>CancellationToken’s Register</code> to register callbacks from token source that would be invoked when calling <code>Cancel</code>.</p>
+</li>
+</ul>
+<h3><span id="tasks">Tasks</span></h3><ul>
+<li><p>Task <em>vs</em> ThreadPool</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ThreadPool.QueueUserWorkItem(ComputeBoundOp, <span class="number">5</span>); <span class="comment">// Calling QueueUserWorkItem</span></span><br><span class="line"><span class="keyword">new</span> Task(ComputeBoundOp, <span class="number">5</span>).Start(); <span class="comment">// Equivalent of preceding using Task</span></span><br><span class="line">Task.Run(() =&gt; ComputeBoundOp(<span class="number">5</span>)); <span class="comment">// Another equivalent</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Wait for Task Completed/Result</p>
+<ul>
+<li>If the compute-bound task throws an <code>unhandled exception</code>, the exception will be <code>swallowed</code>, stored in a collection, and the thread pool thread is allowed to return to the thread pool. When the <code>Wait</code> method or the <code>Result</code> property is invoked, these members will throw a <code>System.AggregateException</code> object.</li>
+<li>If you <code>never</code> call Wait or Result or query a Task’s Exception property, then your code never observes that this exception has occurred. This is not ideal, because your program has experienced an unexpected problem that you are not aware of. To help you detect unobserved exceptions, you can register a callback method with <code>TaskScheduler’s static UnobservedTaskException</code> event.</li>
+</ul>
+</li>
+<li><p>Cancel a Task</p>
+<ul>
+<li><p>you can use a <code>CancellationTokenSource</code> to cancel a <strong>Task</strong> by creating a task associated a <code>CancellationToken</code> within <em>Task</em>‘s constructor.</p>
+  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// one of a cancellable constructors</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Task</span>(<span class="params">Action action, CancellationToken cancellationToken</span>)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Task states, as following.</p>
+ <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">System.Threading.Tasks</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">enum</span> TaskStatus</span><br><span class="line">    &#123;</span><br><span class="line">        Created = <span class="number">0</span>,    <span class="comment">// Task created explicitly; you can manually Start() this task</span></span><br><span class="line">        WaitingForActivation = <span class="number">1</span>,   <span class="comment">// Task created implicitly; it starts automatically</span></span><br><span class="line">        WaitingToRun = <span class="number">2</span>,   <span class="comment">// The task was scheduled but isn’t running yet</span></span><br><span class="line">        Running = <span class="number">3</span>,    <span class="comment">// The task is actually running</span></span><br><span class="line">        WaitingForChildrenToComplete = <span class="number">4</span>,   <span class="comment">// The task is waiting for children to complete before it considers itself complete</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// A task's final state is one of these:</span></span><br><span class="line">        RanToCompletion = <span class="number">5</span>,</span><br><span class="line">        Canceled = <span class="number">6</span>,</span><br><span class="line">        Faulted = <span class="number">7</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Only task in Non-Run status (<code>Created / WaitingForActivation / WaitingToRun</code>) can be successfully canceled, otherwise, if the task is started/running (<code>Running</code>), cancel task would throw <code>System.AggregateException</code> exception when calling Wait/Result of Task, and if the task is completed (<code>RanToCompletion</code>/<code>Canceled</code>/<code>Faulted</code>), cancel will take no effects and also throw no exceptions.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>ContinueWith another Task</p>
+<ul>
+<li><code>task</code> can be continued with another task, or tasks one by one, in <code>continuationAction</code> can access the pass-in <code>task</code>, continuationAction can also <code>cancelable</code> via <code>CancellationToken</code>, and executes <code>conditionally</code> by <code>TaskContinuationOptions</code>.  <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sample overload of ContinueWith</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Task <span class="title">ContinueWith</span>(<span class="params">Action&lt;Task&gt; continuationAction, CancellationToken cancellationToken, TaskContinuationOptions continuationOptions, TaskScheduler scheduler</span>)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>Inside a Task</p>
+<ul>
+<li><code>todo</code></li>
+</ul>
+</li>
+<li><p>Task Factory</p>
+<ul>
+<li><code>todo</code></li>
+</ul>
+</li>
+<li><p>Task Scheduler</p>
+<ul>
+<li><code>todo</code></li>
+</ul>
+</li>
+<li><p><strong>Task.Delay vs Thread.Sleep</strong><br>  <code>Task.Delay</code> will created a Task with status <code>WaitingForActivation</code>, will automatic starts (actually take no actions) to <code>complete</code>, usually <code>ContinueWith</code> another task to execute after delay.</p>
+<ul>
+<li>As it’s a new task, an async task, it would not block current thread. But if Wait() the task, it also block current thread, if use <code>async/await</code> pattern it would non-block current thread and wait for completion.</li>
+<li><p>As it’s <code>WaitingForActivation</code>, it can’t be Start again, it will start automatically.</p>
+<p><code>Thread.Sleep</code> would directly sleep/block current thread for a period of time.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  create a non-operation async task to complete after 10s delay. status ='WaitingForActivation', it starts automatically, non-block current thread.</span></span><br><span class="line">Task.Delay(<span class="number">10</span> * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// throw exception 'Start may not be called on a promise-style task.'</span></span><br><span class="line"><span class="comment">// because task status ='WaitingForActivation', task created implicitly; it starts automatically, don't use Start to schedule it again.</span></span><br><span class="line">Task.Delay(<span class="number">10</span> * <span class="number">1000</span>).Start();</span><br><span class="line"></span><br><span class="line"><span class="comment">// wait 10s, block current thread</span></span><br><span class="line">Task.Delay(<span class="number">10</span> * <span class="number">1000</span>).Wait();</span><br><span class="line"></span><br><span class="line"><span class="comment">// wait 10s, but non-block current thread, because of async/await machinism</span></span><br><span class="line"><span class="keyword">await</span> Task.Delay(<span class="number">10</span> * <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// wait/sleep 10s, block current thread</span></span><br><span class="line">Thread.Sleep(<span class="number">10</span> * <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3><span id="parallel">Parallel</span></h3><h2><span id="references">References</span></h2><ul>
+<li>CLR Via C#, 4th Edition, by <code>Jeffrey Richter</code></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="noopener">进程与线程的一个简单解释</a></li>
+<li><a href="https://social.technet.microsoft.com/wiki/contents/articles/21177.visual-c-thread-sleep-vs-task-delay.aspx" target="_blank" rel="noopener">Visual C#: Thread.Sleep vs. Task.Delay</a></li>
+</ul>
+<h2><span id="about-me">About Me</span></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> about = &#123;</span><br><span class="line">    name:<span class="string">'xiao-fang'</span>,</span><br><span class="line">    site:<span class="string">'http://xiao-fang.cc'</span>,</span><br><span class="line">    intro: <span class="string">'code to live, live to code...'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2017/05/17/windows-thread/" title="Windows Thread">http://xiao-fang.cc/2017/05/17/windows-thread/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CLR-via-C/" rel="tag"># CLR via C#</a>
+          
+            <a href="/tags/CLR/" rel="tag"># CLR</a>
+          
+            <a href="/tags/Windows/" rel="tag"># Windows</a>
+          
+            <a href="/tags/Thread/" rel="tag"># Thread</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/11/install-postgresql-on-centos/" rel="next" title="How to Install PostgreSQL on CentOS 7?">
+                <i class="fa fa-chevron-left"></i> How to Install PostgreSQL on CentOS 7?
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/02/poem-shaonian-you/" rel="prev" title="少年游">
+                少年游 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Thread Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.1.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.2.</span> <span class="nav-text">Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.</span> <span class="nav-text">Thread</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.4.</span> <span class="nav-text">CLR Threads vs Windows Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.5.</span> <span class="nav-text">Brief</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.6.</span> <span class="nav-text">Two kind of Async Operations:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.7.</span> <span class="nav-text">Thread Schedule and Priorities</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.8.</span> <span class="nav-text">Foregroud Threads vs. Backgroud Threads</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">Compute-Bound Async Operations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">Thread Pool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.2.</span> <span class="nav-text">Execution Contexts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.3.</span> <span class="nav-text">Cooperative Cancellation and Timeout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.4.</span> <span class="nav-text">Tasks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.5.</span> <span class="nav-text">Parallel</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">About Me</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:35</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2017/05/17/windows-thread/';
+          this.page.identifier = '2017/05/17/windows-thread/';
+          this.page.title = 'Windows Thread';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1146 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="CentOS,Docker,DevOps,Linux,Container,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="Let’s take Docker official example as demo, refer to Get Started, Part 2: Containers.(demo codes also come from this official post) Define a Container with a DockerfileLearn more about Dockerfile, ple">
+<meta name="keywords" content="CentOS,Docker,DevOps,Linux,Container">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker03 - Create a Docker Container">
+<meta property="og:url" content="http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="Let’s take Docker official example as demo, refer to Get Started, Part 2: Containers.(demo codes also come from this official post) Define a Container with a DockerfileLearn more about Dockerfile, ple">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://xiao-fang.cc/uploads/docker03-create-container-01.png">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker03 - Create a Docker Container">
+<meta name="twitter:description" content="Let’s take Docker official example as demo, refer to Get Started, Part 2: Containers.(demo codes also come from this official post) Define a Container with a DockerfileLearn more about Dockerfile, ple">
+<meta name="twitter:image" content="http://xiao-fang.cc/uploads/docker03-create-container-01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/">
+
+
+
+
+
+  <title> Docker03 - Create a Docker Container | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Docker03 - Create a Docker Container
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-27T01:00:00+00:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习笔记/Docker/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/27/docker03-create-docker-container/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/27/docker03-create-docker-container/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/27/docker03-create-docker-container/" class="leancloud_visitors" data-flag-title="Docker03 - Create a Docker Container">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Let’s take Docker official example as demo, refer to <a href="https://docs.docker.com/get-started/part2/" target="_blank" rel="noopener">Get Started, Part 2: Containers</a>.<br><em>(demo codes also come from this official post)</em></p>
+<h3><span id="define-a-container-with-a-dockerfile">Define a <code>Container</code> with a <code>Dockerfile</code></span></h3><p>Learn more about <code>Dockerfile</code>, please refer to official wiki.</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder/" target="_blank" rel="noopener"><code>Dockerfile</code> Reference</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/" target="_blank" rel="noopener"><code>Dockerfile</code> Best Practice</a></li>
+</ul>
+<h3><span id="create-an-app-itself">Create an app itself</span></h3><p>As for demo, here is a python web app, getting started with hello world, it contains two files <code>app.py</code> and its <code>requirements.txt</code>.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tree .</span></span><br><span class="line">.</span><br><span class="line">├── app.py</span><br><span class="line">├── Dockerfile</span><br><span class="line">└── requirements.txt</span><br></pre></td></tr></table></figure>
+<h3><span id="build-dockerfile-and-its-app-into-image">Build <code>Dockerfile</code> and its app into <code>Image</code></span></h3><p>then the folder structure of the python-web app is:</p>
+<blockquote>
+<p><code>Dockerfile</code> define/describle how the app could be built into an docker <code>image</code>.</p>
+</blockquote>
+<a id="more"></a>
+<h4><span id="before-a-docker-build">Before a <code>Docker Build</code></span></h4><p>before any docker containers or images created, the <code>docker images -a</code> and <code>docker ps -a</code> list <code>no any image and no any containers</code> also.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line"></span><br><span class="line"># docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line"></span><br><span class="line"># cat /var/lib/docker/image/overlay/repositories.json</span><br><span class="line">&#123;&quot;Repositories&quot;:&#123;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>At the same time, take a loot at the status of docker lib <code>/var/lib/docker</code>, it seems that there’s nothing under image / containers / swarm.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tree /var/lib/docker/</span></span><br><span class="line">/var/lib/docker/</span><br><span class="line">├── containers</span><br><span class="line">├── image</span><br><span class="line">│   └── overlay</span><br><span class="line">│       ├── distribution</span><br><span class="line">│       │   ├── diffid-by-digest</span><br><span class="line">│       │   │   └── sha256</span><br><span class="line">│       │   │       └── 78445dd45222097f5f8d5a16e48dc19c4ca162dcdb80010ab6f1ccfc7e2c0fa3</span><br><span class="line">│       │   └── v2metadata-by-diffid</span><br><span class="line">│       │       └── sha256</span><br><span class="line">│       ├── imagedb</span><br><span class="line">│       │   ├── content</span><br><span class="line">│       │   │   └── sha256</span><br><span class="line">│       │   └── metadata</span><br><span class="line">│       │       └── sha256</span><br><span class="line">│       ├── layerdb</span><br><span class="line">│       │   ├── mounts</span><br><span class="line">│       │   ├── sha256</span><br><span class="line">│       │   └── tmp</span><br><span class="line">│       └── repositories.json</span><br><span class="line">├── swarm</span><br><span class="line">├── tmp</span><br><span class="line">├── trust</span><br><span class="line">└── volumes</span><br><span class="line">    └── metadata.db</span><br></pre></td></tr></table></figure>
+<h4><span id="build-a-docker-image">Build a Docker Image</span></h4><p>Then build Dockerfile and associated files into <code>image</code> via <code>docker build -t pythonweb .</code>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t pythonweb .</span><br><span class="line"></span><br><span class="line">Sending build context to Docker daemon 4.608 kB</span><br><span class="line">......</span><br><span class="line">Step 7/7 : CMD python app.py</span><br><span class="line"> ---&gt; Running in 363f11978b86</span><br><span class="line"> ---&gt; c55347aa7def</span><br><span class="line">Removing intermediate container 363f11978b86</span><br><span class="line">Successfully built c55347aa7def</span><br></pre></td></tr></table></figure></p>
+<p>Shown as above build log, some <code>intermediate containers</code> were created and then were removed at the end, finally, a new build image with the id <code>c55347aa7def</code> was created.</p>
+<h4><span id="after-a-docker-build">After a <code>Docker Build</code></span></h4><p>Ok, let’s check docker images and containers and document libs again, see what happens after a <code>docker build</code>.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line"></span><br><span class="line">$ docker images</span><br><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">pythonweb           latest              c55347aa7def        13 minutes ago      194 MB</span><br><span class="line">python              2.7-slim            4a323b466a5a        43 hours ago        182 MB</span><br></pre></td></tr></table></figure></p>
+<p>Shown as above, there are two images <code>pythonweb</code> and <code>python</code>, so the <code>pythonweb</code> is the one we just build, and the <code>python</code> with tag <code>2.7-slim</code> is what our <code>pythonweb</code> depends on and defined in the <code>Dockerfile</code> as following.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Use an official Python runtime as a base image</span></span><br><span class="line">FROM python:<span class="number">2.7</span>-slim</span><br></pre></td></tr></table></figure></p>
+<p>Then let’s check the docker lib <code>/var/lib/docker/image/overlay/repositories.json</code>, shows docker image repositories.<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cat /var/lib/docker/image/overlay/repositories.json</span><br><span class="line">&#123;<span class="attr">"Repositories"</span>:&#123;<span class="attr">"python"</span>:&#123;<span class="attr">"python:2.7-slim"</span>:<span class="string">"sha256:4a323b466a5ac4ce65248dd970b538922c54e535700cafe9448b52a3094483ea"</span>,<span class="attr">"python@sha256:2185f75c1dfb1852f04126da57dfe807d608bbebf782f49782009a881c48ab89"</span>:<span class="string">"sha256:4a323b466a5ac4ce65248dd970b538922c54e535700cafe9448b52a3094483ea"</span>&#125;,<span class="attr">"pythonweb"</span>:&#123;<span class="attr">"pythonweb:latest"</span>:<span class="string">"sha256:c55347aa7def1cd290274456f3ce9cadaac68991bc4c40e8868f554476fabe21"</span>&#125;&#125;&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Also, massive directories and files were <code>copied</code> <em>(maybe not that correct, would investigate further later)</em> into <code>/var/lib/docker/overlay/</code> directory…</p>
+<h3><span id="run-the-app">Run the App</span></h3><p>Now a new created/built docker image is ready, let’s run it.</p>
+<p>As the <code>pythonweb</code> app <code>EXPOSE</code> d port <code>80</code> inner, then mapping to local machine (docker engine host machine)’s port, like <code>4000</code>.<br>Firstly check if local port <code>4000</code> is already allocated yet.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -plnt | grep 4000</span><br></pre></td></tr></table></figure>
+<p>then run the app</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 4000:80 pythonweb</span><br></pre></td></tr></table></figure>
+<p>As we can see the <code>pythonweb</code> app is running now ~</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 4000:80 pythonweb</span><br><span class="line"> * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure>
+<p>Open a browser then visit <code>hostname:4000</code>, here logs the http requests.</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.226.1 - - [27/Apr/2017 00:36:54] &quot;GET / HTTP/1.1&quot; 200 -</span><br><span class="line">192.168.226.1 - - [27/Apr/2017 00:36:54] &quot;GET /favicon.ico HTTP/1.1&quot; 404 -</span><br><span class="line">192.168.226.1 - - [27/Apr/2017 00:37:10] &quot;GET / HTTP/1.1&quot; 200 -</span><br></pre></td></tr></table></figure>
+<p>The browser shows..<br><img src="/uploads/docker03-create-container-01.png" alt></p>
+<p>And also, see what happens to <code>Docker</code> after run an app.</p>
+<ul>
+<li>a new <code>docker container</code> was created with the app’s image, that bind a local port <code>4000</code> to container’s <code>EXPOSE</code> port <code>80</code>.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES</span><br><span class="line">050bf22ff4c5        pythonweb           <span class="string">"python app.py"</span>     7 minutes ago       Up 7 minutes        0.0.0.0:4000-&gt;80/tcp   upbeat_rosalind</span><br></pre></td></tr></table></figure>
+<ul>
+<li>then take a look at port <code>4000</code>, listen by a program named <code>docker-proxy</code>.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@devops edworks]<span class="comment"># netstat -plnt | grep 4000</span></span><br><span class="line">tcp6       0      0 :::4000                 :::*                    LISTEN      61649/docker-proxy</span><br></pre></td></tr></table></figure>
+<ul>
+<li>and a new directory with long-long uuid created under <code>/var/lib/docker/containers/</code>, there are <code>log</code>, <code>checkpoints</code>,<code>config</code>,<code>hostname</code>,<code>hosts</code>,<code>resove.conf</code>,<code>shm</code>, etc.<br>I’d checked the <code>hostname</code> it’s the <code>container-id</code>.</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tree /var/lib/docker/containers/</span></span><br><span class="line">/var/lib/docker/containers/</span><br><span class="line">└── 050bf22ff4c5775fb6904e9ffd035a40af006347ff1e1b6bae5d651d9cc5b12b</span><br><span class="line">    ├── 050bf22ff4c5775fb6904e9ffd035a40af006347ff1e1b6bae5d651d9cc5b12b-json.log</span><br><span class="line">    ├── checkpoints</span><br><span class="line">    ├── config.v2.json</span><br><span class="line">    ├── hostconfig.json</span><br><span class="line">    ├── hostname</span><br><span class="line">    ├── hosts</span><br><span class="line">    ├── resolv.conf</span><br><span class="line">    ├── resolv.conf.hash</span><br><span class="line">    └── shm</span><br></pre></td></tr></table></figure>
+<h4><span id="run-the-app-at-quiet-mode">Run the app at <code>quiet</code> mode</span></h4><p>Let’s go back, when the app started, shows <code>Running on http://0.0.0.0:80/ (Press CTRL+C to quit)</code> as log, so when current session is break/quit, the app would be stopped.</p>
+<ul>
+<li>To start a container in <code>detached</code> mode, you use <code>-d=true</code> or just <code>-d</code> option. By design, containers started in detached mode exit when the root process used to run the container exits</li>
+<li>To reattach to a detached container, use docker attach command.</li>
+<li>Refer to <a href="https://docs.docker.com/engine/reference/run/#detached--d" target="_blank" rel="noopener">Detached (-d)</a></li>
+</ul>
+<h4><span id="stop-start-a-docker-container">Stop / Start a Docker <code>Container</code></span></h4><ul>
+<li>Docker <code>run</code> can always creates a new container.</li>
+<li>Docker <code>start</code> or <code>stop</code> can stop / start an existing container without creating a new.</li>
+<li>References:<ul>
+<li><a href="https://docs.docker.com/engine/reference/commandline/stop/" target="_blank" rel="noopener">docker <code>stop</code></a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/start/" target="_blank" rel="noopener">docker <code>start</code></a></li>
+<li><a href="https://docs.docker.com/engine/reference/commandline/run/" target="_blank" rel="noopener">docker <code>run</code></a></li>
+</ul>
+</li>
+</ul>
+<h3><span id="qampa">Q&amp;A</span></h3><blockquote>
+<p>Q: Can the same app run with multiple containers, how to assign the port?<br>A: Yes the same app <code>can</code> run with multiple containers, but should be assigned to <code>different ports</code> if on same docker host machine, otherwise the container<code>would be created but cannot run</code>.</p>
+</blockquote>
+<p>Run the app to bind a allocated port, that Error: <code>failed: port is already allocated.</code><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 4000:80 pythonweb</span><br><span class="line">docker: Error response from daemon: driver failed programming external connectivity on endpoint distracted_knuth (43bd1b6d4140ea22abd7eb5243f9f1573ac6e8ffacd952b23ec16a4c59c63a54): Bind <span class="keyword">for</span> 0.0.0.0:4000 failed: port is already allocated.</span><br></pre></td></tr></table></figure></p>
+<p>Run the app to bind not container’s <code>EXPOSE</code> port, that <code>app running successfully in container, but the app sevice cannot be accesss</code> due to <code>miss-configured EXPOSE d port</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 4040:88 pythonweb</span><br><span class="line"> * Running on http://0.0.0.0:80/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><strong> Notice: that even a <code>failed: port is already allocated</code> error happens the <code>container</code> could be also created successfully with the status <code>Created</code>. </strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -p 4000:80 pythonweb</span><br><span class="line">docker: Error response from daemon: driver failed programming external connectivity on endpoint gifted_raman (16eecc637261d89a20be1827aeba135c5472b5b4a0055f2a1c035be5152add38): Bind for 0.0.0.0:4000 failed: port is already allocated.</span><br><span class="line"></span><br><span class="line">$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS              PORTS                  NAMES</span><br><span class="line">b263cc629e40        pythonweb           &quot;python app.py&quot;     16 seconds ago       Created                                    gifted_raman</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: If a port already allocated, can the app runs anyway?<br>A: The container would be also created, but it cannot be allocated the port and cannot run. (as above).</p>
+</blockquote>
+<h3><span id="notes">Notes</span></h3><h3><span id="outlines">Outlines:</span></h3><ul>
+<li>Docker01 - Hello, Docker<ul>
+<li>What’s Docker</li>
+<li>What’s Container<ul>
+<li><a href="https://www.docker.com/what-container" target="_blank" rel="noopener">What’s Container</a></li>
+<li><a href="https://containerd.io/" target="_blank" rel="noopener">What’s containerd</a></li>
+<li>Container vs VM</li>
+<li>References</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Docker02 - Install Docker on CentOS 7</li>
+<li>Docker03 - Create a Docker Container</li>
+<li>Docker04 - Docker Service</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/" title="Docker03 - Create a Docker Container">http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CentOS/" rel="tag"># CentOS</a>
+          
+            <a href="/tags/Docker/" rel="tag"># Docker</a>
+          
+            <a href="/tags/DevOps/" rel="tag"># DevOps</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Container/" rel="tag"># Container</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/docker-post-install-tips/" rel="next" title="General Post-Installation Steps for Docker on CentOS">
+                <i class="fa fa-chevron-left"></i> General Post-Installation Steps for Docker on CentOS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/27/migrate-tfs-to-git/" rel="prev" title="Migrate TFS Project to Git">
+                Migrate TFS Project to Git <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Define a Container with a Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">Create an app itself</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">Build Dockerfile and its app into Image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">Before a Docker Build</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">Build a Docker Image</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.3.</span> <span class="nav-text">After a Docker Build</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">Run the App</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">4.1.</span> <span class="nav-text">Run the app at quiet mode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">4.2.</span> <span class="nav-text">Stop / Start a Docker Container</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Q&amp;A</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">Notes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">Outlines:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:35</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2017/04/27/docker03-create-docker-container/';
+          this.page.identifier = '2017/04/27/docker03-create-docker-container/';
+          this.page.title = 'Docker03 - Create a Docker Container';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

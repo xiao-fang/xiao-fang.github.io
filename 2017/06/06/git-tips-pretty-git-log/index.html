@@ -1,0 +1,1112 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Git,Tips,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="xiao-fang.cc" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0">
+
+
+
+
+
+
+<meta name="description" content="git loggit log is the command to list git change history. the default git log console output is not that pretty as following. 1git log --max-count=5           C:\Workspace\xiao-fang.github.io (hexo)">
+<meta name="keywords" content="Git,Tips">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pretty Git Log">
+<meta property="og:url" content="http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/index.html">
+<meta property="og:site_name" content="xiao-fang.cc">
+<meta property="og:description" content="git loggit log is the command to list git change history. the default git log console output is not that pretty as following. 1git log --max-count=5           C:\Workspace\xiao-fang.github.io (hexo)">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-11-16T01:47:12.577Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pretty Git Log">
+<meta name="twitter:description" content="git loggit log is the command to list git change history. the default git log console output is not that pretty as following. 1git log --max-count=5           C:\Workspace\xiao-fang.github.io (hexo)">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: 'AYXL0AULE5',
+      apiKey: 'e5e91236d8d39042373d70d6c800244b',
+      indexName: 'xiao-fang.cc',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/">
+
+
+
+
+
+  <title> Pretty Git Log | xiao-fang.cc </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">xiao-fang.cc</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一粟生</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-leisure">
+          <a href="/categories/闲言随笔/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            Leisure
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xiao-fang">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="xiao-fang.cc">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Pretty Git Log
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-06T00:00:00+00:00">
+                2017-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/拾遗补阙/" itemprop="url" rel="index">
+                    <span itemprop="name">拾遗补阙</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/06/git-tips-pretty-git-log/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/06/06/git-tips-pretty-git-log/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/06/git-tips-pretty-git-log/" class="leancloud_visitors" data-flag-title="Pretty Git Log">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3><span id="git-log"><code>git log</code></span></h3><p><code>git log</code> is the command to list git change history. the default <code>git log</code> console output is not that pretty as following.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --max-count=5</span><br></pre></td></tr></table></figure>
+<pre style="background-color: #272822">
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #8DD006;background-color: #272822;">C:\Workspace\xiao-fang.github.io </span><span style="color: #F3044B;background-color: #272822;">(hexo) </span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #7C7C7C;background-color: #272822;">λ </span><span style="color: #CACACA;background-color: #272822;">git log --max-count=5 </span>
+    <span style="color: #B6B649;background-color: #272822;">commit f4f30751999a62428347a3681f3dea175d6301d2</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao-fang &lt;xf@xxmail.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Mon Jun 5 16:47:28 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">add a new post 'pretty git log', and update an old post </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 9c883d710af69845cce226632cdd7bb361fbab3c</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao-fang &lt;xf@xxmail.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:16:08 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">update adminKey for algolia with TRAVIS env var. </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit a6e7c00d6200629f62a9d402659a2910d5beda44</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao-fang &lt;xf@xxmail.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 18:02:53 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">update adminKey for algolia. </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 579b0cab229fe60000dfda03bc2d935bfa742ce3</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao-fang &lt;xf@xxmail.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:14:55 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. update algolia version from 1.01. to 0.2.0 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #B6B649;background-color: #272822;">commit 233120a04db71f3eca60f3524e0cab287f302b4c</span><span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">Author: xiao-fang &lt;xf@xxmail.com&gt;</span>
+    <span style="color: #CACACA;background-color: #272822;">Date: Fri Jun 2 17:05:59 2017 +0800 </span>
+    <span style="color: #CACACA;background-color: #272822;"></span>
+    <span style="color: #CACACA;background-color: #272822;">integrated 'hexo-algolia' search feature. </span>
+<br>
+</pre>
+
+<a id="more"></a>
+<h3><span id="git-pretty-log">git <code>Pretty</code> log</span></h3><p>here is my <code>git log pretty scheme</code>, let’s compare it with <code>git log</code> default output style.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.hist <span class="string">"log --pretty=format:'%C(yellow)[%ad]%C(reset) %C(green)[%h]%C(reset) | %s %C(bold red)%d%C(reset) %C(green)[%an]%C(reset)' --graph --date=short"</span></span><br></pre></td></tr></table></figure></p>
+<p>looks like as following.</p>
+<pre style="background-color: #272822">
+    <br>
+    <span style="color: #8DD006; background-color: #272822; ">C:\Workspace\xiao-fang.github.io </span><span style="color: #F3044B; background-color: #272822; ">(hexo) </span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #7C7C7C; background-color: #272822; ">λ </span><span style="color: #CACACA; background-color: #272822; ">git hist --max-count=20 </span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[9c883d7]</span><span style="color: #CACACA; background-color: #272822; ">| update adminKey for algolia with TRAVIS env var. </span><span style="color: #F3044B; background-color: #272822; ">(HEAD -&gt; hexo, origin/hexo)</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[a6e7c00]</span><span style="color: #CACACA; background-color: #272822; ">| update adminKey for algolia. </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[579b0ca]</span><span style="color: #CACACA; background-color: #272822; ">| integrated 'hexo-algolia' search feature. update algolia version from 1.01. to 0.2.0 </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[233120a]</span><span style="color: #CACACA; background-color: #272822; ">| integrated 'hexo-algolia' search feature. </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[eaaccc9]</span><span style="color: #CACACA; background-color: #272822; ">| move 'clr-via-cs-01' from _posts to _drafts. </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[bdc542d]</span><span style="color: #CACACA; background-color: #272822; ">| add 'server-world.info' homepage link. </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[9b8beaf]</span><span style="color: #CACACA; background-color: #272822; ">| update 'window-threading' post </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[3a95f39]</span><span style="color: #CACACA; background-color: #272822; ">| update header/content-wrapper width to 80% </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[6301b70]</span><span style="color: #CACACA; background-color: #272822; ">| update header/content-wrapper width to 80% </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[96bfa34]</span><span style="color: #CACACA; background-color: #272822; ">| update window-thread post, table </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[be2aaac]</span><span style="color: #CACACA; background-color: #272822; ">| update table-layout: fixed to auto </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[97387fd]</span><span style="color: #CACACA; background-color: #272822; ">| turn off animation. </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-06-02]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[5f7401b]</span><span style="color: #CACACA; background-color: #272822; ">| update `windows threading` post </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-26]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[232e708]</span><span style="color: #CACACA; background-color: #272822; ">| update `windows threading` post </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-26]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[adc8be1]</span><span style="color: #CACACA; background-color: #272822; ">| update `windows threading` post </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-22]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[a6028dc]</span><span style="color: #CACACA; background-color: #272822; ">| update draft post 'clr via cs - execution model' typo issue </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-22]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[5ba5652]</span><span style="color: #CACACA; background-color: #272822; ">| update draft post 'clr via cs - execution model' resources </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-22]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[2c59263]</span><span style="color: #CACACA; background-color: #272822; ">| update draft post 'windows threading'; add new draft post 'clr via cs - execution model' </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-17]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[8445888]</span><span style="color: #CACACA; background-color: #272822; ">| update draft post 'windows threading' </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <span style="color: #CACACA; background-color: #272822; ">* </span><span style="color: #B6B649; background-color: #272822; ">[2017-05-17]</span><span style="color: #CACACA; background-color: #272822; "></span><span style="color: #74AA04; background-color: #272822; ">[3e39b9a]</span><span style="color: #CACACA; background-color: #272822; ">| update draft post 'windows threading' </span><span style="color: #74AA04; background-color: #272822; ">[xiao-fang]</span><span style="color: #CACACA; background-color: #272822; "></span>
+    <br>
+</pre>
+
+
+<h3><span id="reference">Reference</span></h3><ul>
+<li><p><a href="https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History" target="_blank" rel="noopener">2.3 Git Basics - Viewing the Commit History</a></p>
+</li>
+<li><p><a href="https://git-scm.com/docs/pretty-formats" target="_blank" rel="noopener">Git History with Pretty Format</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>Post author:</strong>
+      xiao-fang
+    </li>
+    <li class="post-copyright-link">
+      <strong>Post link:</strong>
+      <a href="http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/" title="Pretty Git Log">http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>Copyright Notice: </strong>
+      All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+            <a href="/tags/Tips/" rel="tag"># Tips</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/02/poem-shaonian-you/" rel="next" title="少年游">
+                <i class="fa fa-chevron-left"></i> 少年游
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/27/npm-bower-git-etc-proxy-configs/" rel="prev" title="Npm, Bower, Git, and Bash Proxy Configurations">
+                Npm, Bower, Git, and Bash Proxy Configurations <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="https://s.gravatar.com/avatar/1d49cc3c20c76d2b3aaece97f80bab75?s=80" alt="xiao-fang">
+          <p class="site-author-name" itemprop="name">xiao-fang</p>
+           
+              <p class="site-description motion-element" itemprop="description">才子詞人, 自是白衣卿相</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/xiao-fang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.linkedin.com/in/edwardxiao/" target="_blank" title="LinkedIn">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  LinkedIn
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/vanceeshaw" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/HolaRealEdward" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://hexo.io/" title="Hexo" target="_blank">Hexo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://theme-next.iissnan.com/" title="NexT-Theme" target="_blank">NexT-Theme</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.server-world.info/en/" title="Server-World" target="_blank">Server-World</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">git log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">git Pretty log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiao-fang</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+<div>
+  
+  <small>updated on 2020/11/16 01:47:35</small>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://xiao-fang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://xiao-fang.cc/2017/06/06/git-tips-pretty-git-log/';
+          this.page.identifier = '2017/06/06/git-tips-pretty-git-log/';
+          this.page.title = 'Pretty Git Log';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://xiao-fang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("gocrva24xoSIH126goBniQVy-gzGzoHsz", "ekjPmQXcjcQy2DN9BIMfRUjC");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
